@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./css/main.css">
+        <title>Bresenham</title>
+    </head>
+
+    <body>
+        <div id="canvas-block">
+            <canvas></canvas>
+        </div>
+        <div id="controls">
+            <h3>Reta</h3>
+            <div id="origin-input" class="input-block">
+                <label>Ponto origem (x1,y1)</label>
+                <input type="number" value="0" min="0" max="26" name="" id="x1-axis-input" class="axis-input">
+                <input type="number" value="0" min="0" max="15" name="" id="y1-axis-input" class="axis-input">
+            </div>
+            <div id="destiny-input" class="input-block">
+                <label>Ponto Destino (x2,y2)</label>
+                <input type="number" value="0" min="0" max="26" name="" id="x2-axis-input" class="axis-input">
+                <input type="number" value="0" min="0" max="15" name="" id="y2-axis-input" class="axis-input">
+            </div>
+            <div class="row">
+                <input type="button" id="build-line-btn" value="Desenhar Reta">
+                <input type="button" id="clear-screen-btn" value="Limpar Canvas">
+            </div>
+
+        </div>
+    </body>
+    <script type="module" src="./index.js"></script>
+
+</html>
