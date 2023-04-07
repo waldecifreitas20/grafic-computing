@@ -14,24 +14,35 @@
             <canvas></canvas>
         </div>
         <div id="controls">
-            <h3>Reta</h3>
-            <div id="origin-input" class="input-block">
-                <label>Ponto origem (x1,y1)</label>
-                <input type="number" value="0" min="0" max="26" name="" id="x1-axis-input" class="axis-input">
-                <input type="number" value="0" min="0" max="15" name="" id="y1-axis-input" class="axis-input">
+            <div id="line-building-section">
+                <h3>Reta</h3>
+                <div id="origin-input" class="input-block">
+                    <label>Ponto origem (x1,y1)</label>
+                    <input type="number" value="0" min="0" max="42" name="" id="x1-axis-input" class="axis-input">
+                    <input type="number" value="0" min="0" max="28" name="" id="y1-axis-input" class="axis-input">
+                </div>
+                <div id="destiny-input" class="input-block">
+                    <label>Ponto Destino (x2,y2)</label>
+                    <input type="number" value="0" min="0" max="84" name="" id="x2-axis-input" class="axis-input">
+                    <input type="number" value="0" min="0" max="54" name="" id="y2-axis-input" class="axis-input">
+                </div>
+                <input type="button" id="build-line-btn" class="build-btn" value="Desenhar Reta">
             </div>
-            <div id="destiny-input" class="input-block">
-                <label>Ponto Destino (x2,y2)</label>
-                <input type="number" value="0" min="0" max="26" name="" id="x2-axis-input" class="axis-input">
-                <input type="number" value="0" min="0" max="15" name="" id="y2-axis-input" class="axis-input">
-            </div>
-            <div class="row">
-                <input type="button" id="build-line-btn" value="Desenhar Reta">
-                <input type="button" id="clear-screen-btn" value="Limpar Canvas">
+            <br>
+
+            <div id="circle-building-section">
+                <h3>Círculo</h3>
+                <div id="radius-input-block" class="input-block">
+                    <label>Raio (px)</label>
+                    <input type="number" value="0" min="0" max="27" name="" id="radius-input" class="axis-input">
+                </div>
+                <input type="button" id="build-circle-btn" class="build-btn" value="Desenhar Círculo">
             </div>
 
+            <input type="button" id="clear-screen-btn" value="Limpar Canvas">
         </div>
     </body>
+    <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
     <script type="module" src="./index.js"></script>
 
 </html>
