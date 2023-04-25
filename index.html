@@ -14,7 +14,8 @@
             <canvas></canvas>
         </div>
         <div id="controls">
-            <div id="line-building-section">
+            <!-- BRESENHAM -->
+            <section id="line-building-section">
                 <h3>Reta</h3>
                 <div id="origin-input" class="input-block">
                     <label>Ponto origem (x1,y1)</label>
@@ -27,17 +28,50 @@
                     <input type="number" value="0" min="0" max="54" name="" id="y2-axis-input" class="axis-input">
                 </div>
                 <input type="button" id="build-line-btn" class="build-btn" value="Desenhar Reta">
-            </div>
+
+                <!-- POINTS-LIST -->
+                <div class="card-list-block" id="points-bresenham">
+                    <h4>Desenhos</h4>
+                    <div class="card">
+                        <div class="points-list">
+                            p1(2,6);
+                            p1(2,6);
+                            p1(2,6);
+                            p1(2,6);
+                            p1(2,6);
+                        </div>
+                        <button id="id do desenho">Excluir Desenho</button>
+                    </div>
+                </div>
+            </section>
             <br>
 
-            <div id="circle-building-section">
+            <section id="circle-building-section">
                 <h3>Círculo</h3>
                 <div id="radius-input-block" class="input-block">
                     <label>Raio (px)</label>
                     <input type="number" value="0" min="0" max="27" name="" id="radius-input" class="axis-input">
                 </div>
                 <input type="button" id="build-circle-btn" class="build-btn" value="Desenhar Círculo">
-            </div>
+
+                <!-- POINTS-LIST -->
+                <div class="points-list-block" id="points-circle"></div>
+            </section>
+
+            <section id="ellipse-building-section">
+                <h3>Elipse</h3>
+                <div id="ellipse-input-block" class="input-block">
+                    <label>Origem (a,b)</label>
+                    <input type="number" value="0" min="0" max="84" name="" id="ellipse-a-axis-input"
+                        class="axis-input">
+                    <input type="number" value="0" min="0" max="54" name="" id="ellipse-b-axis-input"
+                        class="axis-input">
+                </div>
+                <input type="button" id="build-ellipse-btn" class="build-btn" value="Desenhar Círculo">
+
+                <!-- POINTS-LIST -->
+                <div class="points-list-block" id="points-elipse"></div>
+            </section>
 
             <input type="button" id="clear-screen-btn" value="Limpar Canvas">
         </div>

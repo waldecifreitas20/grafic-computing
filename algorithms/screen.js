@@ -1,4 +1,7 @@
 import OrderedPair from "../models/OrderedPair.js";
+import DATA from "../data/data.js";
+import AppDataItem from "../models/Shape.js";
+
 
 const MAX_X = 84;
 const MAX_Y = 54;
@@ -17,13 +20,33 @@ function buildCanvas() {
 
     for (let y = 0; y <= MAX_Y; y++) {
         for (let x = 0; x <= MAX_X; x++) {
-            renderBackground(new OrderedPair(x, y), 'white');
+            _renderBackground(new OrderedPair(x, y), 'white');
         }
+    }
+
+    for (let figure in DATA) {
+        renderShape(figure.points);
     }
 
 }
 
-function renderPoint(orderedPoint, color = 'black') {
+
+function renderShape(points) {
+    for (const point of points) {
+        _renderPoint(point);
+    }
+}
+
+function addPointCardList(listId, points) {
+    let cardList = document.getElementById(listId);
+
+
+}
+
+function removePointCardList() {}
+
+
+function _renderPoint(orderedPoint, color = 'black') {
     let x = (MAX_X / 2 + orderedPoint.x) * PIXEL_SIZE * 1.05;
     let y = (MAX_Y / 2 - orderedPoint.y) * PIXEL_SIZE * 1.05;
     let brush = canvas.getContext('2d');
@@ -33,7 +56,7 @@ function renderPoint(orderedPoint, color = 'black') {
 }
 
 
-function renderBackground(orderedPoint, color = 'black') {
+function _renderBackground(orderedPoint, color = 'black') {
     let x = orderedPoint.x * PIXEL_SIZE * 1.05;
     let y = orderedPoint.y * PIXEL_SIZE * 1.05;
     let brush = canvas.getContext('2d');
@@ -44,17 +67,10 @@ function renderBackground(orderedPoint, color = 'black') {
 }
 
 
-function renderLine(points) {
-    for (const point of points) {
-        renderPoint(point);
-    }
-}
-
-
-
-
-export {
-    renderLine,
+export default {
+    renderShape,
     buildCanvas,
     canvas,
+    addPointCardList,
+    removePointCardList
 }
