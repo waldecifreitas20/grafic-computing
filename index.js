@@ -1,14 +1,21 @@
 import Bresenham from "./algorithms/bresenham.js";
-import Shape from "./models/Shape.js";
+import Shape from "./models/Shape.js"
 import screen from "./algorithms/screen.js";
 import { buildCircle } from "./algorithms/curve.js";
 import { buildEllipse } from "./algorithms/ellipse.js";
 import OrderedPair from "./models/OrderedPair.js";
 import DATABASE from './data/data.js';
 
+const renderOnScreen = (cardListId, shape) => {
+    screen.renderShape(shape);
+    screen.addPointCardList(cardListId, shape);
+}
 
-
-let brham = new Bresenham(10);
+const setDeleteButton = shapeId => {
+    document.getElementById(`btn-${shapeId}`).addEventListener('click', () => {
+        screen.removePointCardList(shapeId);
+    });
+}
 
 document.getElementById('build-line-btn').addEventListener('click', () => {
     // INPUTS
@@ -17,30 +24,30 @@ document.getElementById('build-line-btn').addEventListener('click', () => {
     let y1 = Number.parseInt(document.getElementById('y1-axis-input').value);
     let y2 = Number.parseInt(document.getElementById('y2-axis-input').value);
 
-    // CARDS LIST ID
-    let displayId = 'list-points-bresenham';
+    let cardListId = 'list-points-bresenham';
 
     // ORDEREDS PAIRS
     let origin = new OrderedPair(x1, y1);
     let destiny = new OrderedPair(x2, y2);
 
-    //LINE POINTS 
-    let points = brham.buildLine(origin, destiny);
+    //GET LINE POINTS 
+    let bresenham = new Bresenham(10);
+    let points = bresenham.buildLine(origin, destiny);
 
-    // Shape object
     let line = new Shape(points);
 
-    // Save line in app data
     DATABASE.saveShape(line);
 
-    // RENDERS THE LINE ON SCREEN
+    renderOnScreen(cardListId, line);
+    setDeleteButton(line.id);
+    /* // RENDERS THE LINE ON SCREEN
     screen.renderShape(line);
-    screen.addPointCardList(displayId, line);
-
-    // DELETE SHAPE ON CLICK
+    screen.addPointCardList(cardListId, line);
+ 
+    // DELETE LINE ON CLICK
     document.getElementById(`btn-${line.id}`).addEventListener('click', () => {
         screen.removePointCardList(line.id);
-    });
+    }); */
 });
 
 document.getElementById('build-circle-btn').addEventListener('click', () => {
@@ -48,7 +55,10 @@ document.getElementById('build-circle-btn').addEventListener('click', () => {
 
     let points = buildCircle(r);
 
-    screen.renderShape(points);
+    let line = new Shape(points);
+    DATABASE.saveShape(line);
+
+    screen.renderShape(line);
 });
 
 

@@ -8,8 +8,8 @@ const MAX_Y = 54;
 const PIXEL_SIZE = 10;
 let canvas;
 
-buildCanvas();
 
+buildCanvas();
 function buildCanvas() {
     const CANVAS_HEIGHT = 577;
     const CANVAS_WIDTH = 892;
