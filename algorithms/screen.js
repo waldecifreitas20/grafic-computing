@@ -1,5 +1,5 @@
 import OrderedPair from "../models/OrderedPair.js";
-import DATA from "../data/data.js";
+import DATABASE from "../data/data.js";
 import AppDataItem from "../models/Shape.js";
 
 
@@ -7,6 +7,7 @@ const MAX_X = 84;
 const MAX_Y = 54;
 const PIXEL_SIZE = 10;
 let canvas;
+
 buildCanvas();
 
 function buildCanvas() {
@@ -24,26 +25,54 @@ function buildCanvas() {
         }
     }
 
-    for (let figure in DATA) {
-        renderShape(figure.points);
+    for (let shape of DATABASE.shapes) {
+
+        console.log(shape);
+        console.log(shape.points);
+        renderShape(shape);
     }
 
 }
 
+function clearCanvas() {
+    DATABASE.clear();
+    buildCanvas();
+}
 
-function renderShape(points) {
-    for (const point of points) {
+function renderShape(shape) {
+    for (const point of shape.points) {
         _renderPoint(point);
     }
 }
 
-function addPointCardList(listId, points) {
+function addPointCardList(listId, shape) {
     let cardList = document.getElementById(listId);
 
+    let card = document.createElement('div');
+    card.setAttribute('class', 'card');
+    card.setAttribute('id', `card-${shape.id}`);
+
+    // Create card content
+    card.innerHTML += `<div class="points-list">`;
+    for (let i = 0; i < shape.points.length; i++) {
+        card.innerHTML += `p${i + 1}(${shape.points[i].x}, ${shape.points[i].y}); `;
+    }
+    card.innerHTML += '</div>';
+
+    // delete's button
+    card.innerHTML += `<button id="btn-${shape.id}">Excluir Desenho</button>`;
+
+    cardList.appendChild(card);
 
 }
 
-function removePointCardList() {}
+function removePointCardList(shapeId) {
+    DATABASE.deleteShape(shapeId);
+    let card = document.getElementById(`card-${shapeId}`);
+    card.remove();
+    
+    buildCanvas();
+}
 
 
 function _renderPoint(orderedPoint, color = 'black') {
@@ -63,7 +92,6 @@ function _renderBackground(orderedPoint, color = 'black') {
 
     brush.fillStyle = color;
     brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
-
 }
 
 
@@ -71,6 +99,7 @@ export default {
     renderShape,
     buildCanvas,
     canvas,
+    clearCanvas,
     addPointCardList,
     removePointCardList
 }

@@ -37,6 +37,7 @@ canvas {
 .card-list-block {
     min-height: 100px;
     background-color: cornsilk;
+    padding: 10px;
 }
 
 .card {
