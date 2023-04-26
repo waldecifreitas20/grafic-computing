@@ -35,7 +35,9 @@ canvas {
 }
 
 .card-list-block {
-    min-height: 100px;
+    min-height: 0px;
+    margin-top: 10PX;
+    margin-bottom: 20PX;
     background-color: cornsilk;
     padding: 10px;
 }
