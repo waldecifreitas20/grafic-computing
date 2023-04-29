@@ -23,13 +23,13 @@
                     <h3>Reta</h3>
                     <div id="origin-input" class="input-block">
                         <label>Ponto origem (x1,y1)</label>
-                        <input type="number" value="0" min="0" max="42" name="" id="x1-axis-input" class="axis-input">
-                        <input type="number" value="0" min="0" max="28" name="" id="y1-axis-input" class="axis-input">
+                        <input type="number" value="0" min="0" max="42" id="x1-axis-input" class="axis-input">
+                        <input type="number" value="0" min="0" max="28" id="y1-axis-input" class="axis-input">
                     </div>
                     <div id="destiny-input" class="input-block">
                         <label>Ponto Destino (x2,y2)</label>
-                        <input type="number" value="0" min="0" max="84" name="" id="x2-axis-input" class="axis-input">
-                        <input type="number" value="0" min="0" max="54" name="" id="y2-axis-input" class="axis-input">
+                        <input type="number" value="0" min="0" max="84" id="x2-axis-input" class="axis-input">
+                        <input type="number" value="0" min="0" max="54" id="y2-axis-input" class="axis-input">
                     </div>
                     <input type="button" id="build-line-btn" class="build-btn" value="Desenhar Reta">
 
@@ -46,7 +46,7 @@
                     <h3>Círculo</h3>
                     <div id="radius-input-block" class="input-block">
                         <label>Raio (px)</label>
-                        <input type="number" value="0" min="0" max="27" name="" id="radius-input" class="axis-input">
+                        <input type="number" value="0" min="0" max="27" id="radius-input" class="axis-input">
                     </div>
                     <input type="button" id="build-circle-btn" class="build-btn" value="Desenhar Círculo">
 
@@ -61,11 +61,9 @@
                     <h3>Elipse</h3>
                     <div id="ellipse-input-block" class="input-block">
                         <label>Origem (a,b)</label>
-                        <input type="number" value="0" min="0" max="84" name="" id="ellipse-a-axis-input"
-                            class="axis-input">
+                        <input type="number" value="0" min="0" max="84" id="ellipse-a-axis-input" class="axis-input">
 
-                        <input type="number" value="0" min="0" max="54" name="" id="ellipse-b-axis-input"
-                            class="axis-input">
+                        <input type="number" value="0" min="0" max="54" id="ellipse-b-axis-input" class="axis-input">
                     </div>
                     <input type="button" id="build-ellipse-btn" class="build-btn" value="Desenhar Círculo">
 
@@ -83,6 +81,14 @@
                 <h2>Controle das Formas</h2>
                 <section id="translation-section">
                     <h3>Translação</h3>
+                    <label for="translation-select">Id da forma:</label>
+                    <select class="transformation-select" id="translation-select">
+                        <option value="alo"></option>
+                    </select>
+                    <div id="translation-controller">
+                        <input type="number" id="translation-x">
+                        <input type="number" id="translation-y">
+                    </div>
                 </section>
             </div>
         </div>

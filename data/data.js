@@ -1,4 +1,4 @@
-import {generateRamdomId} from '../utils/utils.js';
+import { generateRamdomId } from '../utils/utils.js';
 
 class AppData {
     constructor() {
@@ -34,7 +34,13 @@ class AppData {
         this.shapes = [];
     }
 
-
+    getShapesId() {
+        let ids = [];
+        for (const shape of this.shapes) {
+            ids.push(shape.id);
+        }
+        return ids;
+    }
 };
 
 const DATABASE = new AppData();
