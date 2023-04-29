@@ -1,14 +1,11 @@
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from "../data/data.js";
 
-
-const MAX_X = 84;
-const MAX_Y = 54;
+const MAX_X = 84; // MAX QUANTITY OF PIXELS ALONG AXYS X
+const MAX_Y = 54; // MAX QUANTITY OF PIXELS ALONG AXYS X
 const PIXEL_SIZE = 10;
 let canvas;
 
-
-buildCanvas();
 function buildCanvas() {
     const CANVAS_HEIGHT = 577;
     const CANVAS_WIDTH = 892;
@@ -25,9 +22,6 @@ function buildCanvas() {
     }
 
     for (let shape of DATABASE.shapes) {
-
-        console.log(shape);
-        console.log(shape.points);
         renderShape(shape);
     }
 
@@ -35,7 +29,7 @@ function buildCanvas() {
 
 function clearCanvas() {
     DATABASE.clear();
-    _clearCardsList();
+    _clearCardsLists();
     buildCanvas();
 }
 
@@ -45,7 +39,7 @@ function renderShape(shape) {
     }
 }
 
-function addPointCardList(listId, shape) {
+function addCardTo(listId, shape) {
     let cardList = document.getElementById(listId);
 
     let card = document.createElement('div');
@@ -96,13 +90,11 @@ function _renderBackground(orderedPoint, color = 'black') {
 }
 
 
-function _clearCardsList() {
+function _clearCardsLists() {
     let lists = document.getElementsByClassName('card-item');
     let length = lists.length;
-    console.log(length);
-    console.log(lists);
+ 
     for (let i = length - 1; i >= 0; i--) {
-
         lists[i].remove();
     }
 }
@@ -110,8 +102,7 @@ function _clearCardsList() {
 export default {
     renderShape,
     buildCanvas,
-    canvas,
     clearCanvas,
-    addPointCardList,
+    addCardTo,
     removePointCardList
 }

@@ -6,9 +6,13 @@ import { buildEllipse } from "./algorithms/ellipse.js";
 import OrderedPair from "./models/OrderedPair.js";
 import DATABASE from './data/data.js';
 
+// BUILD THE GRID ON START APLICATION
+screen.buildCanvas();
+
+
 const renderOnScreen = (cardListId, shape) => {
     screen.renderShape(shape);
-    screen.addPointCardList(cardListId, shape);
+    screen.addCardTo(cardListId, shape);
 }
 
 const setDeleteButton = shapeId => {
