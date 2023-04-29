@@ -5,20 +5,21 @@ import { buildCircle } from "../algorithms/curve.js";
 import { buildEllipse } from "../algorithms/ellipse.js";
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from '../data/data.js';
+import transformation from '../algorithms/transformation.js';
 
-const renderOnScreen = (cardListId, shape) => {
+const _renderOnScreen = (cardListId, shape) => {
     screen.renderShape(shape);
     screen.addCardTo(cardListId, shape);
 }
 
-const setDeleteButton = shapeId => {
+const _setDeleteButton = shapeId => {
     document.getElementById(`btn-${shapeId}`).addEventListener('click', () => {
         screen.removePointCardList(shapeId);
-        refillSelects();
+        _refillSelects();
     });
 }
 
-const refillSelects = () => {
+const _refillSelects = () => {
     /* 
         AFTER DELETE OR ADD A SHAPE, 
         IT WILL REBUILD THE OPTIONS 
@@ -26,7 +27,7 @@ const refillSelects = () => {
     */
     let selects = document.getElementsByClassName('transformation-select');
     let ids = DATABASE.getShapesId();
-    
+
     for (const select of selects) {
         select.innerHTML = '';
         for (const id of ids) {
@@ -37,7 +38,6 @@ const refillSelects = () => {
 }
 
 function enableEvents() {
-
     // BRESENHAM
     document.getElementById('build-line-btn').addEventListener('click', () => {
         // INPUTS
@@ -60,9 +60,9 @@ function enableEvents() {
 
         DATABASE.saveShape(line);
 
-        renderOnScreen(cardListId, line);
-        setDeleteButton(line.id);
-        refillSelects();
+        _renderOnScreen(cardListId, line);
+        _setDeleteButton(line.id);
+        _refillSelects();
     });
 
     // CREATE CIRCLE
@@ -76,9 +76,9 @@ function enableEvents() {
         DATABASE.saveShape(circle);
 
         const cardListId = 'list-points-circle';
-        renderOnScreen(cardListId, circle);
-        setDeleteButton(circle.id);
-        refillSelects();
+        _renderOnScreen(cardListId, circle);
+        _setDeleteButton(circle.id);
+        _refillSelects();
     });
 
     //CREATE ELLIPSE
@@ -92,14 +92,28 @@ function enableEvents() {
         let ellipse = new Shape(points);
 
         DATABASE.saveShape(ellipse);
-        renderOnScreen(cardListId, ellipse);
-        setDeleteButton(ellipse.id);
-        refillSelects();
+        _renderOnScreen(cardListId, ellipse);
+        _setDeleteButton(ellipse.id);
+        _refillSelects();
     });
 
     document.getElementById('clear-screen-btn').addEventListener('click', () => {
         screen.clearCanvas();
-        refillSelects();
+        _refillSelects();
+    });
+
+    // APPLY TRANSLATION
+    document.getElementById('btn-translation').addEventListener('click', () => {
+        let shapeId = document.getElementById('translation-select').value;
+        let translateOnX = Number(document.getElementById('translation-x').value);
+        let translateOnY = Number(document.getElementById('translation-y').value);
+
+        let shape = DATABASE.getShapeById(shapeId);
+
+        transformation.translate(shape, translateOnX, translateOnY);
+        DATABASE.updateShape(shape);
+        screen.buildCanvas();
+
     });
 }
 

@@ -41,6 +41,25 @@ class AppData {
         }
         return ids;
     }
+
+    getShapeById(id) {
+        for (const shape of this.shapes) {
+            if (id == shape.id) {
+                return shape;
+            }
+        }
+        return false;
+    }
+
+    updateShape(shape) {
+        for (let i = 0; i < this.shapes.length; i++) {
+            if (shape.id == this.shapes[i].id) {
+                this.shapes[i] = shape;
+                return true;
+            }
+        }
+        return false;
+    }
 };
 
 const DATABASE = new AppData();
