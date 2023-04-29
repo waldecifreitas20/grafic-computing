@@ -1,6 +1,5 @@
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from "../data/data.js";
-import AppDataItem from "../models/Shape.js";
 
 
 const MAX_X = 84;
@@ -36,6 +35,7 @@ function buildCanvas() {
 
 function clearCanvas() {
     DATABASE.clear();
+    _clearCardsList();
     buildCanvas();
 }
 
@@ -49,28 +49,29 @@ function addPointCardList(listId, shape) {
     let cardList = document.getElementById(listId);
 
     let card = document.createElement('div');
-    card.setAttribute('class', 'card');
+    card.setAttribute('class', 'card-item');
     card.setAttribute('id', `card-${shape.id}`);
 
     // Create card content
-    card.innerHTML += `<div class="points-list">`;
+    let html = '';
+    html += `<div class="points-list">`;
+    html += `<p class="shape-id"><strong>Id:</strong> ${shape.id}`;
+    html += `<button id="btn-${shape.id}">Excluir Desenho</button></p>`;  // delete's button
+    html += `<div class="divider"></div>`;
+
     for (let i = 0; i < shape.points.length; i++) {
-        card.innerHTML += `p${i + 1}(${shape.points[i].x}, ${shape.points[i].y}); `;
+        html += `p${i + 1}(${shape.points[i].x}, ${shape.points[i].y}); `;
     }
-    card.innerHTML += '</div>';
+    html += '</div>';
 
-    // delete's button
-    card.innerHTML += `<button id="btn-${shape.id}">Excluir Desenho</button>`;
-
+    card.innerHTML = html;
     cardList.appendChild(card);
-
 }
 
 function removePointCardList(shapeId) {
     DATABASE.deleteShape(shapeId);
     let card = document.getElementById(`card-${shapeId}`);
     card.remove();
-    
     buildCanvas();
 }
 
@@ -94,6 +95,17 @@ function _renderBackground(orderedPoint, color = 'black') {
     brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
 }
 
+
+function _clearCardsList() {
+    let lists = document.getElementsByClassName('card-item');
+    let length = lists.length;
+    console.log(length);
+    console.log(lists);
+    for (let i = length - 1; i >= 0; i--) {
+
+        lists[i].remove();
+    }
+}
 
 export default {
     renderShape,

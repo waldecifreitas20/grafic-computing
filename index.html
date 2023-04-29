@@ -12,63 +12,79 @@
     <body>
         <div id="canvas-block">
             <canvas></canvas>
-        </div>
-        <div id="controls">
-            <!-- BRESENHAM -->
-            <section id="line-building-section">
-                <h3>Reta</h3>
-                <div id="origin-input" class="input-block">
-                    <label>Ponto origem (x1,y1)</label>
-                    <input type="number" value="0" min="0" max="42" name="" id="x1-axis-input" class="axis-input">
-                    <input type="number" value="0" min="0" max="28" name="" id="y1-axis-input" class="axis-input">
-                </div>
-                <div id="destiny-input" class="input-block">
-                    <label>Ponto Destino (x2,y2)</label>
-                    <input type="number" value="0" min="0" max="84" name="" id="x2-axis-input" class="axis-input">
-                    <input type="number" value="0" min="0" max="54" name="" id="y2-axis-input" class="axis-input">
-                </div>
-                <input type="button" id="build-line-btn" class="build-btn" value="Desenhar Reta">
-
-                <!-- POINTS-LIST -->
-                <div class="card-list-block" id="list-points-bresenham">
-                    <h4>Desenhos</h4>
-                </div>
-            </section>
-            <br>
-
-            <!-- CIRCLE -->
-            <section id="circle-building-section">
-                <h3>Círculo</h3>
-                <div id="radius-input-block" class="input-block">
-                    <label>Raio (px)</label>
-                    <input type="number" value="0" min="0" max="27" name="" id="radius-input" class="axis-input">
-                </div>
-                <input type="button" id="build-circle-btn" class="build-btn" value="Desenhar Círculo">
-
-                <!-- POINTS-LIST -->
-                <div class="card-list-block" id="list-points-bresenham">
-                    <h4>Desenhos</h4>
-                </div>
-            </section>
-
-            <section id="ellipse-building-section">
-                <h3>Elipse</h3>
-                <div id="ellipse-input-block" class="input-block">
-                    <label>Origem (a,b)</label>
-                    <input type="number" value="0" min="0" max="84" name="" id="ellipse-a-axis-input"
-                        class="axis-input">
-                    <input type="number" value="0" min="0" max="54" name="" id="ellipse-b-axis-input"
-                        class="axis-input">
-                </div>
-                <input type="button" id="build-ellipse-btn" class="build-btn" value="Desenhar Círculo">
-
-                <!-- POINTS-LIST -->
-                <div class="card-list-block" id="list-points-bresenham">
-                    <h4>Desenhos</h4>
-                </div>
-            </section>
-
             <input type="button" id="clear-screen-btn" value="Limpar Canvas">
+        </div>
+        <div id="side-bar">
+
+            <div id="shape-creation">
+                <h2>Criação de Formas</h2>
+                <!-- BRESENHAM -->
+                <section id="line-building-section">
+                    <h3>Reta</h3>
+                    <div id="origin-input" class="input-block">
+                        <label>Ponto origem (x1,y1)</label>
+                        <input type="number" value="0" min="0" max="42" name="" id="x1-axis-input" class="axis-input">
+                        <input type="number" value="0" min="0" max="28" name="" id="y1-axis-input" class="axis-input">
+                    </div>
+                    <div id="destiny-input" class="input-block">
+                        <label>Ponto Destino (x2,y2)</label>
+                        <input type="number" value="0" min="0" max="84" name="" id="x2-axis-input" class="axis-input">
+                        <input type="number" value="0" min="0" max="54" name="" id="y2-axis-input" class="axis-input">
+                    </div>
+                    <input type="button" id="build-line-btn" class="build-btn" value="Desenhar Reta">
+
+                    <!-- POINTS-LIST -->
+                    <section class="card-section">
+                        <h4>Desenhos</h4>
+                        <div class="card-list-block" id="list-points-bresenham">
+                        </div>
+                    </section>
+                </section>
+                <br>
+                <!-- CIRCLE -->
+                <section id="circle-building-section">
+                    <h3>Círculo</h3>
+                    <div id="radius-input-block" class="input-block">
+                        <label>Raio (px)</label>
+                        <input type="number" value="0" min="0" max="27" name="" id="radius-input" class="axis-input">
+                    </div>
+                    <input type="button" id="build-circle-btn" class="build-btn" value="Desenhar Círculo">
+
+                    <!-- POINTS-LIST -->
+                    <section class="card-section">
+                        <h4>Desenhos</h4>
+                        <div class="card-list-block" id="list-points-circle"></div>
+                    </section>
+                </section>
+                <!-- ELLIPSE -->
+                <section id="ellipse-building-section">
+                    <h3>Elipse</h3>
+                    <div id="ellipse-input-block" class="input-block">
+                        <label>Origem (a,b)</label>
+                        <input type="number" value="0" min="0" max="84" name="" id="ellipse-a-axis-input"
+                            class="axis-input">
+
+                        <input type="number" value="0" min="0" max="54" name="" id="ellipse-b-axis-input"
+                            class="axis-input">
+                    </div>
+                    <input type="button" id="build-ellipse-btn" class="build-btn" value="Desenhar Círculo">
+
+                    <!-- POINTS-LIST -->
+                    <section class="card-section">
+                        <h4>Desenhos</h4>
+                        <div class="card-list-block" id="list-points-ellipse">
+                        </div>
+                    </section>
+                </section>
+            </div>
+
+            <!-- SHAPES CONTROLLER -->
+            <div id="shape-control">
+                <h2>Controle das Formas</h2>
+                <section id="translation-section">
+                    <h3>Translação</h3>
+                </section>
+            </div>
         </div>
     </body>
     <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>

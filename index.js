@@ -19,12 +19,12 @@ const setDeleteButton = shapeId => {
 
 document.getElementById('build-line-btn').addEventListener('click', () => {
     // INPUTS
-    let x1 = Number.parseInt(document.getElementById('x1-axis-input').value);
-    let x2 = Number.parseInt(document.getElementById('x2-axis-input').value);
-    let y1 = Number.parseInt(document.getElementById('y1-axis-input').value);
-    let y2 = Number.parseInt(document.getElementById('y2-axis-input').value);
+    const x1 = Number.parseInt(document.getElementById('x1-axis-input').value);
+    const x2 = Number.parseInt(document.getElementById('x2-axis-input').value);
+    const y1 = Number.parseInt(document.getElementById('y1-axis-input').value);
+    const y2 = Number.parseInt(document.getElementById('y2-axis-input').value);
 
-    let cardListId = 'list-points-bresenham';
+    const cardListId = 'list-points-bresenham';
 
     // ORDEREDS PAIRS
     let origin = new OrderedPair(x1, y1);
@@ -40,25 +40,20 @@ document.getElementById('build-line-btn').addEventListener('click', () => {
 
     renderOnScreen(cardListId, line);
     setDeleteButton(line.id);
-    /* // RENDERS THE LINE ON SCREEN
-    screen.renderShape(line);
-    screen.addPointCardList(cardListId, line);
- 
-    // DELETE LINE ON CLICK
-    document.getElementById(`btn-${line.id}`).addEventListener('click', () => {
-        screen.removePointCardList(line.id);
-    }); */
 });
 
 document.getElementById('build-circle-btn').addEventListener('click', () => {
     let r = Number.parseInt(document.getElementById('radius-input').value);
 
+    
     let points = buildCircle(r);
-
-    let line = new Shape(points);
-    DATABASE.saveShape(line);
-
-    screen.renderShape(line);
+    let circle = new Shape(points);
+    
+    DATABASE.saveShape(circle);
+    
+    const cardListId = 'list-points-circle';
+    renderOnScreen(cardListId, circle);
+    setDeleteButton(circle.id);
 });
 
 
@@ -66,10 +61,14 @@ document.getElementById('build-ellipse-btn').addEventListener('click', () => {
     let a = Number.parseInt(document.getElementById('ellipse-a-axis-input').value);
     let b = Number.parseInt(document.getElementById('ellipse-b-axis-input').value);
 
+    const cardListId = 'list-points-ellipse';
 
     let points = buildEllipse(a, b);
-
-    screen.renderShape(points);
+    let ellipse = new Shape(points);
+    
+    DATABASE.saveShape(ellipse);
+    renderOnScreen(cardListId, ellipse);
+    setDeleteButton(ellipse.id);
 });
 
 document.getElementById('clear-screen-btn').addEventListener('click', () => {

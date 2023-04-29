@@ -1,13 +1,10 @@
-export default class Transformation {
-    constructor(points) {
-        this.points = points;
-    }
-
-    translate(x, y) {
-        for (let i = 0; i < this.points.length; i++) {
-            this.points[i].x += x;
-            this.points[i].y += y;
-        }
+function translate(shape, x, y) {
+    for (let i = 0; i < shape.points.length; i++) {
+        shape.points[i].x += x;
+        shape.points[i].y += y;
     }
 }
 
+export default {
+    translate,
+}

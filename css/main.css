@@ -12,7 +12,7 @@ body {
     display: flex;
 }
 
-#controls {
+#side-bar {
     display: grid;
     padding: 10px;
     width: 100%;
@@ -34,7 +34,7 @@ canvas {
     width: 50px;
 }
 
-.card-list-block {
+.card-section {
     min-height: 0px;
     margin-top: 10PX;
     margin-bottom: 20PX;
@@ -42,8 +42,15 @@ canvas {
     padding: 10px;
 }
 
-.card {
+.card-item {
     padding: 10px;
     background-color: yellow;
     margin: 10px;
+}
+
+.divider {
+    height: 1px;
+    width: 200px;
+    margin: 5px 0;
+    background-color: black;
 }

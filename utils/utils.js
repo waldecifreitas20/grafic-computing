@@ -26,7 +26,12 @@ function renderOnTerminal(matrix, points) {
 }
 
 
+function generateRamdomId() {
+    return (Math.random() * 10).toFixed(0);
+}
+
 export {
     createMatrix,
     renderOnTerminal,
+    generateRamdomId,
 };

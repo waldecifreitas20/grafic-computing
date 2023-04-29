@@ -1,6 +1,8 @@
+import { generateRamdomId } from "../utils/utils.js";
+
 export default class Shape {
     constructor(points) {
-        this.id = Math.random();
+        this.id = generateRamdomId();
         this.points = points;
     }
 }
