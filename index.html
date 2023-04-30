@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./css/main.css">
-        <title>Bresenham</title>
+        <title>Computação Gráfica</title>
     </head>
 
     <body>
@@ -31,7 +31,7 @@
                         <input type="number" value="0" min="0" max="84" id="x2-axis-input" class="axis-input">
                         <input type="number" value="0" min="0" max="54" id="y2-axis-input" class="axis-input">
                     </div>
-                    <input type="button" id="build-line-btn" class="build-btn" value="Desenhar Reta">
+                    <input type="button" id="build-line-btn" class="btn build-btn" value="Desenhar Reta">
 
                     <!-- POINTS-LIST -->
                     <section class="card-section">
@@ -40,7 +40,29 @@
                         </div>
                     </section>
                 </section>
-                <br>
+               
+                <!-- POLYLINES -->
+                <section id="polyline-building-section">
+                    <h3>Polilinhas</h3>
+                    <div id="edges-block">
+                        <div class="polyline-input-block">
+                            <label>Aresta (x1,y1)</label>
+                            <input type="number" value="0" min="0" max="42" class="polyline-x-input">
+                            <input type="number" value="0" min="0" max="28" class="polyline-y-input">
+                            
+                        </div>
+                    </div>
+                    <input type="button" id="add-edge-btn" class="btn add-btn" value="Adicionar Aresta">
+                    <input type="button" id="build-polyline-btn" class="btn build-btn" value="Desenhar Objeto">
+
+                    <!-- POINTS-LIST -->
+                    <section class="card-section">
+                        <h4>Desenhos</h4>
+                        <div class="card-list-block" id="list-polylines">
+                        </div>
+                    </section>
+                </section>
+                
                 <!-- CIRCLE -->
                 <section id="circle-building-section">
                     <h3>Círculo</h3>
@@ -48,7 +70,7 @@
                         <label>Raio (px)</label>
                         <input type="number" value="0" min="0" max="27" id="radius-input" class="axis-input">
                     </div>
-                    <input type="button" id="build-circle-btn" class="build-btn" value="Desenhar Círculo">
+                    <input type="button" id="build-circle-btn" class="btn build-btn" value="Desenhar Círculo">
 
                     <!-- POINTS-LIST -->
                     <section class="card-section">
@@ -65,7 +87,7 @@
 
                         <input type="number" value="0" min="0" max="54" id="ellipse-b-axis-input" class="axis-input">
                     </div>
-                    <input type="button" id="build-ellipse-btn" class="build-btn" value="Desenhar Círculo">
+                    <input type="button" id="build-ellipse-btn" class="btn build-btn" value="Desenhar Círculo">
 
                     <!-- POINTS-LIST -->
                     <section class="card-section">

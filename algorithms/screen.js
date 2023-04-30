@@ -67,9 +67,28 @@ function removePointCardList(shapeId) {
     let card = document.getElementById(`card-${shapeId}`);
     card.remove();
     buildCanvas();
+    console.log(DATABASE.getShapesId());
 }
 
+function addEdgeInput(edgeId) {
+    let edgesBlock = document.getElementById('edges-block');
+    let inputBlock = document.createElement('div');
+    inputBlock.innerHTML = `
+            <div id="edge-${edgeId}" class="polyline-input-block">
+                <label>Aresta (x1,y1)</label>
+                <input type="number" value="0" min="0" max="42" class="polyline-x-input">
+                <input type="number" value="0" min="0" max="28" class="polyline-y-input">
+                <input type="button" value="Remover" id="remove-edge-btn-${edgeId}">
+            </div>
+            `;
+    edgesBlock.appendChild(inputBlock)
+}
 
+function removeEdgeInput(edgeId) {
+    document.getElementById(`edge-${edgeId}`).remove();
+}
+
+// PRIVATES
 function _renderPoint(orderedPoint, color = 'black') {
     let x = (MAX_X / 2 + orderedPoint.x) * PIXEL_SIZE * 1.05;
     let y = (MAX_Y / 2 - orderedPoint.y) * PIXEL_SIZE * 1.05;
@@ -78,7 +97,6 @@ function _renderPoint(orderedPoint, color = 'black') {
     brush.fillStyle = color;
     brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
 }
-
 
 function _renderBackground(orderedPoint, color = 'black') {
     let x = orderedPoint.x * PIXEL_SIZE * 1.05;
@@ -89,11 +107,10 @@ function _renderBackground(orderedPoint, color = 'black') {
     brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
 }
 
-
 function _clearCardsLists() {
     let lists = document.getElementsByClassName('card-item');
     let length = lists.length;
- 
+
     for (let i = length - 1; i >= 0; i--) {
         lists[i].remove();
     }
@@ -104,5 +121,7 @@ export default {
     buildCanvas,
     clearCanvas,
     addCardTo,
-    removePointCardList
+    removePointCardList,
+    addEdgeInput,
+    removeEdgeInput,
 }

@@ -6,6 +6,7 @@ import { buildEllipse } from "../algorithms/ellipse.js";
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from '../data/data.js';
 import transformation from '../algorithms/transformation.js';
+import { generateRamdomId } from "../utils/utils.js";
 
 const _renderOnScreen = (cardListId, shape) => {
     screen.renderShape(shape);
@@ -65,6 +66,52 @@ function enableEvents() {
         _refillSelects();
     });
 
+    // ADD POINT INPUT
+    document.getElementById('add-edge-btn').addEventListener('click', () => {
+        let edgeId = generateRamdomId();
+        screen.addEdgeInput(edgeId);
+
+        // REMOVE EDGE INPUT
+        document.getElementById(`remove-edge-btn-${edgeId}`).addEventListener('click', () => {
+            screen.removeEdgeInput(edgeId);
+        });
+    });
+
+    // DRAW POLYLINE
+    document.getElementById('build-polyline-btn').addEventListener('click', () => {
+        const xInputs = document.getElementsByClassName('polyline-x-input');
+        const yInputs = document.getElementsByClassName('polyline-y-input');
+
+        let points = [];
+
+        for (let i = 0; i < xInputs.length; i++) {
+            const x = Number(xInputs[i].value);
+            const y = Number(yInputs[i].value);
+            points.push(new OrderedPair(x, y));
+        }
+
+        let bresenham = new Bresenham(10);
+        let polyline = [];
+        for (let i = 1; i < points.length; i++) {
+            let pointA = points[i - 1];
+            let pointB = points[i];
+
+            polyline = polyline.concat(bresenham.buildLine(pointA, pointB));
+        }
+        polyline = polyline.concat(bresenham.buildLine(points[points.length - 1], points[0]));
+ 
+
+        const shape = new Shape(polyline);
+        const cardListId = 'list-polylines';
+
+        DATABASE.saveShape(shape);
+
+        _renderOnScreen(cardListId, shape);
+        _setDeleteButton(shape.id);
+        _refillSelects();
+
+    });
+
     // CREATE CIRCLE
     document.getElementById('build-circle-btn').addEventListener('click', () => {
         let r = Number.parseInt(document.getElementById('radius-input').value);
@@ -97,6 +144,7 @@ function enableEvents() {
         _refillSelects();
     });
 
+    // CLEAR SCREEN
     document.getElementById('clear-screen-btn').addEventListener('click', () => {
         screen.clearCanvas();
         _refillSelects();
