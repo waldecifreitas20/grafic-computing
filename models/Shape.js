@@ -5,4 +5,5 @@ export default class Shape {
         this.id = generateRamdomId();
         this.points = points;
     }
+        
 }

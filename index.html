@@ -70,6 +70,11 @@
                         <label>Raio (px)</label>
                         <input type="number" value="0" min="0" max="27" id="radius-input" class="axis-input">
                     </div>
+                    <div id="radius-input-block" class="input-block">
+                        <label>Centro (x,y)</label>
+                        <input type="number" value="0" max="42" id="circle-x-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="circle-y-axis-input" class="axis-input">
+                    </div>
                     <input type="button" id="build-circle-btn" class="btn build-btn" value="Desenhar Círculo">
 
                     <!-- POINTS-LIST -->
@@ -78,7 +83,8 @@
                         <div class="card-list-block" id="list-points-circle"></div>
                     </section>
                 </section>
-                <!-- ELLIPSE -->
+                
+                <!-- CURVE -->
                 <section id="ellipse-building-section">
                     <h3>Elipse</h3>
                     <div id="ellipse-input-block" class="input-block">

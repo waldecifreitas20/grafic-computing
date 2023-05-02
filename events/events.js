@@ -1,8 +1,7 @@
 import Bresenham from "../algorithms/bresenham.js";
 import Shape from "../models/Shape.js"
 import screen from "../algorithms/screen.js";
-import { buildCircle } from "../algorithms/curve.js";
-import { buildEllipse } from "../algorithms/ellipse.js";
+import { buildCircle } from "../algorithms/circle.js";
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from '../data/data.js';
 import transformation from '../algorithms/transformation.js';
@@ -99,7 +98,7 @@ function enableEvents() {
             polyline = polyline.concat(bresenham.buildLine(pointA, pointB));
         }
         polyline = polyline.concat(bresenham.buildLine(points[points.length - 1], points[0]));
- 
+
 
         const shape = new Shape(polyline);
         const cardListId = 'list-polylines';
@@ -114,33 +113,19 @@ function enableEvents() {
 
     // CREATE CIRCLE
     document.getElementById('build-circle-btn').addEventListener('click', () => {
-        let r = Number.parseInt(document.getElementById('radius-input').value);
+        const radius = Number.parseInt(document.getElementById('radius-input').value);
+        const y = Number(document.getElementById('circle-y-axis-input').value);
+        const x = Number(document.getElementById('circle-x-axis-input').value);
 
-
-        let points = buildCircle(r);
+        let points = buildCircle(radius);
         let circle = new Shape(points);
+        transformation.translate(circle, x, y);
 
         DATABASE.saveShape(circle);
 
         const cardListId = 'list-points-circle';
         _renderOnScreen(cardListId, circle);
         _setDeleteButton(circle.id);
-        _refillSelects();
-    });
-
-    //CREATE ELLIPSE
-    document.getElementById('build-ellipse-btn').addEventListener('click', () => {
-        let a = Number.parseInt(document.getElementById('ellipse-a-axis-input').value);
-        let b = Number.parseInt(document.getElementById('ellipse-b-axis-input').value);
-
-        const cardListId = 'list-points-ellipse';
-
-        let points = buildEllipse(a, b);
-        let ellipse = new Shape(points);
-
-        DATABASE.saveShape(ellipse);
-        _renderOnScreen(cardListId, ellipse);
-        _setDeleteButton(ellipse.id);
         _refillSelects();
     });
 
