@@ -40,16 +40,16 @@
                         </div>
                     </section>
                 </section>
-               
+
                 <!-- POLYLINES -->
                 <section id="polyline-building-section">
                     <h3>Polilinhas</h3>
                     <div id="edges-block">
                         <div class="polyline-input-block">
-                            <label>Aresta (x1,y1)</label>
+                            <label>Aresta (x,y)</label>
                             <input type="number" value="0" min="0" max="42" class="polyline-x-input">
                             <input type="number" value="0" min="0" max="28" class="polyline-y-input">
-                            
+
                         </div>
                     </div>
                     <input type="button" id="add-edge-btn" class="btn add-btn" value="Adicionar Aresta">
@@ -62,7 +62,7 @@
                         </div>
                     </section>
                 </section>
-                
+
                 <!-- CIRCLE -->
                 <section id="circle-building-section">
                     <h3>Círculo</h3>
@@ -83,23 +83,36 @@
                         <div class="card-list-block" id="list-points-circle"></div>
                     </section>
                 </section>
-                
-                <!-- CURVE -->
-                <section id="ellipse-building-section">
-                    <h3>Elipse</h3>
-                    <div id="ellipse-input-block" class="input-block">
-                        <label>Origem (a,b)</label>
-                        <input type="number" value="0" min="0" max="84" id="ellipse-a-axis-input" class="axis-input">
 
-                        <input type="number" value="0" min="0" max="54" id="ellipse-b-axis-input" class="axis-input">
+                <!-- CURVE -->
+                <section id="curve-building-section">
+                    <h3>Curva</h3>
+
+                    <div id="curve-points-input-block" class="input-block">
+                        <label>Pontos de Suavidade </label>
+                        <input type="number" value="1" min="1" id="curve-smoothness-input" class="axis-input">
                     </div>
-                    <input type="button" id="build-ellipse-btn" class="btn build-btn" value="Desenhar Círculo">
+                    <div id="curve-origin-input-block" class="input-block">
+                        <label>Origem (x,y)</label>
+                        <input type="number" value="0" max="42" id="curve-ox-x-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="curve-oy-axis-input" class="axis-input">
+                    </div>
+                    <div id="curve-c1-input-block" class="input-block">
+                        <label>Controle (x,y)</label>
+                        <input type="number" value="0" max="42" id="curve-c1x-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="curve-c1y-axis-input" class="axis-input">
+                    </div>
+                    <div id="curve-final-input-block" class="input-block">
+                        <label>Final (x,y)</label>
+                        <input type="number" value="0" max="42" id="curve-fx-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="curve-fy-axis-input" class="axis-input">
+                    </div>
+                    <input type="button" id="build-curve-btn" class="btn build-btn" value="Desenhar Curva">
 
                     <!-- POINTS-LIST -->
                     <section class="card-section">
                         <h4>Desenhos</h4>
-                        <div class="card-list-block" id="list-points-ellipse">
-                        </div>
+                        <div class="card-list-block" id="list-points-curve"></div>
                     </section>
                 </section>
             </div>

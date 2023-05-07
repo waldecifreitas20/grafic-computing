@@ -75,7 +75,7 @@ function addEdgeInput(edgeId) {
     let inputBlock = document.createElement('div');
     inputBlock.innerHTML = `
             <div id="edge-${edgeId}" class="polyline-input-block">
-                <label>Aresta (x1,y1)</label>
+                <label>Aresta (x,y)</label>
                 <input type="number" value="0" min="0" max="42" class="polyline-x-input">
                 <input type="number" value="0" min="0" max="28" class="polyline-y-input">
                 <input type="button" value="Remover" id="remove-edge-btn-${edgeId}">

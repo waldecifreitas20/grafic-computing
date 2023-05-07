@@ -6,6 +6,7 @@ import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from '../data/data.js';
 import transformation from '../algorithms/transformation.js';
 import { generateRamdomId } from "../utils/utils.js";
+import buildCurve from "../algorithms/curve.js";
 
 const _renderOnScreen = (cardListId, shape) => {
     screen.renderShape(shape);
@@ -38,6 +39,7 @@ const _refillSelects = () => {
 }
 
 function enableEvents() {
+    let bresenham = new Bresenham(10);
     // BRESENHAM
     document.getElementById('build-line-btn').addEventListener('click', () => {
         // INPUTS
@@ -53,7 +55,6 @@ function enableEvents() {
         let destiny = new OrderedPair(x2, y2);
 
         //GET LINE POINTS 
-        let bresenham = new Bresenham(10);
         let points = bresenham.buildLine(origin, destiny);
 
         let line = new Shape(points);
@@ -126,6 +127,39 @@ function enableEvents() {
         const cardListId = 'list-points-circle';
         _renderOnScreen(cardListId, circle);
         _setDeleteButton(circle.id);
+        _refillSelects();
+    });
+
+    // CREATE CURVA
+    document.getElementById('build-curve-btn').addEventListener('click', () => {
+        /*   const origin = Number.parseInt(document.getElementById('radius-input').value);
+          const y = Number(document.getElementById('circle-y-axis-input').value);
+          const x = Number(document.getElementById('circle-x-axis-input').value);
+   */
+        let p0 = { x: 0, y: 0 };
+        let pc = { x: 10, y: -15 };
+        let p1 = { x: 15, y: 0 };
+
+        let interpolations = buildCurve(p0, pc, p1, 20);
+
+        let points = [].concat(interpolations);
+
+
+        /* let points = [];
+        for (let i = 1; i < interpolations.length; i++) {
+            let p1 = interpolations[i - 1];
+            let p2 = interpolations[i];
+
+            let line = bresenham.buildLine(p1, p2);
+            points = points.concat(line);
+        } */
+
+        let curve = new Shape(points);
+        DATABASE.saveShape(curve);
+
+        const cardListId = 'list-points-curve';
+        _renderOnScreen(cardListId, curve);
+        _setDeleteButton(curve.id);
         _refillSelects();
     });
 
