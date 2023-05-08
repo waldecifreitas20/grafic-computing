@@ -6,8 +6,9 @@ class AppData {
     }
 
     saveShape(shape) {
-        while (this._hasShape(shape.id)) {
-            shape.id = generateRamdomId();
+        if (this._hasShape(shape.id)) {
+            console.log('Shape is already saved');
+            return false;
         }
         this.shapes.push(shape);
     }

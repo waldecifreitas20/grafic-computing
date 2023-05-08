@@ -1,5 +1,6 @@
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from "../data/data.js";
+import Shape from "../models/Shape.js";
 
 const MAX_X = 84; // MAX QUANTITY OF PIXELS ALONG AXYS X
 const MAX_Y = 54; // MAX QUANTITY OF PIXELS ALONG AXYS X
@@ -20,6 +21,8 @@ function buildCanvas() {
             _renderBackground(new OrderedPair(x, y), 'white');
         }
     }
+    
+    //_setCenterAim('red');
 
     for (let shape of DATABASE.shapes) {
         renderShape(shape);
@@ -67,35 +70,38 @@ function removePointCardList(shapeId) {
     let card = document.getElementById(`card-${shapeId}`);
     card.remove();
     buildCanvas();
-    console.log(DATABASE.getShapesId());
 }
 
-function addEdgeInput(edgeId) {
-    let edgesBlock = document.getElementById('edges-block');
+function addVertexInput(vertexId) {
+    let vertexsBlock = document.getElementById('vertexs-block');
     let inputBlock = document.createElement('div');
     inputBlock.innerHTML = `
-            <div id="edge-${edgeId}" class="polyline-input-block">
-                <label>Aresta (x,y)</label>
+            <div id="vertex-${vertexId}" class="polyline-input-block">
+                <label>Vértice (x,y)</label>
                 <input type="number" value="0" min="0" max="42" class="polyline-x-input">
                 <input type="number" value="0" min="0" max="28" class="polyline-y-input">
-                <input type="button" value="Remover" id="remove-edge-btn-${edgeId}">
+                <input type="button" value="Remover" id="remove-vertex-btn-${vertexId}">
             </div>
             `;
-    edgesBlock.appendChild(inputBlock)
+    vertexsBlock.appendChild(inputBlock)
 }
 
-function removeEdgeInput(edgeId) {
-    document.getElementById(`edge-${edgeId}`).remove();
+function removeVertexInput(vertexId) {
+    document.getElementById(`vertex-${vertexId}`).remove();
 }
 
 // PRIVATES
-function _renderPoint(orderedPoint, color = 'black') {
+function _renderPoint(orderedPoint) {
     let x = (MAX_X / 2 + orderedPoint.x) * PIXEL_SIZE * 1.05;
     let y = (MAX_Y / 2 - orderedPoint.y) * PIXEL_SIZE * 1.05;
     let brush = canvas.getContext('2d');
 
-    brush.fillStyle = color;
+    brush.fillStyle = orderedPoint.color;
     brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
+}
+
+function _setCenterAim(color) {
+    DATABASE.saveShape(new Shape([new OrderedPair(0, 0, color)]));
 }
 
 function _renderBackground(orderedPoint, color = 'black') {
@@ -122,6 +128,6 @@ export default {
     clearCanvas,
     addCardTo,
     removePointCardList,
-    addEdgeInput,
-    removeEdgeInput,
+    addVertexInput,
+    removeVertexInput,
 }

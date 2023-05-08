@@ -1,3 +1,36 @@
+const getPoint = () => {
+    return {
+        x: (Math.random() * 10).toFixed(0),
+        y: (Math.random() * 10).toFixed(0),
+    }
+}
+
+const getShape = pointsQtd => {
+    let points = [];
+    for (let i = 0; i < pointsQtd; i++) {
+        points.push(getPoint());
+    }
+
+    return {
+        id: (Math.random() * 100000).toFixed(0),
+        points,
+    }
+}
+
+const scaleX = (factor, shape) => {
+    let points = [];
+    let b = new Bresenham();
+    for (let i = 0; i < shape.points.length; i++) {
+        let segment = b.buildLine(
+            new OrderedPair(shape.points[i].x, shape.points[i].y),
+            new OrderedPair(shape.points[i].x, shape.points[i].y),
+        );
+        points = points.concat(segment)
+
+    }
+    return points;
+}
+
 class OrderedPair {
     constructor(x, y, value = '-', color = 'black') {
         this.x = Math.round(x);
@@ -9,7 +42,6 @@ class OrderedPair {
 }
 
 class Bresenham {
-
     constructor(matrixLength = 100) {
         this.matrixLength = matrixLength;
         this.matrix = this._createMatrix(matrixLength, '- ');
@@ -20,6 +52,47 @@ class Bresenham {
         this.EMPTY_POINT = '-  ';
         this.pointsLocation = [];
         this._reflectedPointsLocation = [];
+    }
+
+    buildLine(origin, destiny) {
+        let x1 = origin.x;
+        let x2 = destiny.x;
+        let y1 = origin.y;
+        let y2 = destiny.y;
+        let axis = this._reflect(x1, x2, y1, y2);
+        console.log(axis);
+
+        x1 = axis['x1'];
+        x2 = axis['x2'];
+        y1 = axis['y1'];
+        y2 = axis['y2'];
+
+        let M = (y2 - y1) / (x2 - x1);
+        let e = M - 0.5;
+        let x = x1;
+        let y = y1;
+
+        this._reflectedPointsLocation.push(new OrderedPair(x, y, '0  '));
+
+        while (x < x2) {
+            if (e >= 0) {
+                y++;
+                e--;
+            }
+
+            x++;
+            e += M;
+
+            this._reflectedPointsLocation.push(new OrderedPair(x, y,));
+        }
+        console.log(this._reflectedPointsLocation);
+
+       this._disreflectMatrix();
+
+        let points = this.pointsLocation.copyWithin();
+        this.pointsLocation = [];
+
+        return points;
     }
 
     _createMatrix(length, point) {
@@ -76,46 +149,6 @@ class Bresenham {
         };
     }
 
-    buildLine(origin, destiny) {
-        let x1 = origin.x;
-        let x2 = destiny.x;
-        let y1 = origin.y;
-        let y2 = destiny.y;
-        let axis = this._reflect(x1, x2, y1, y2);
-
-        x1 = axis['x1'];
-        x2 = axis['x2'];
-        y1 = axis['y1'];
-        y2 = axis['y2'];
-
-        let M = (y2 - y1) / (x2 - x1);
-        let e = M - 0.5;
-        let x = x1;
-        let y = y1;
-
-        this._reflectedPointsLocation.push(new OrderedPair(x, y, '0  '));
-
-        while (x < x2) {
-            if (e >= 0) {
-                y++;
-                e--;
-            }
-
-            x++;
-            e += M;
-
-            this._reflectedPointsLocation.push(new OrderedPair(x, y,));
-        }
-        this._disreflectMatrix();
-
-        let points = this.pointsLocation.copyWithin();
-        this.pointsLocation = [];
-
-        return points;
-    }
-
-
-
     _disreflectMatrix() {
         for (var point of this._reflectedPointsLocation) {
             let x = point.x;
@@ -147,43 +180,32 @@ class Bresenham {
     }
 }
 
-const getPoint = () => {
-    return {
-        x: (Math.random() * 10).toFixed(0),
-        y: (Math.random() * 10).toFixed(0),
-    }
-}
+function renderOnTerminal(matrix, points) {
+    let m = matrix.copyWithin();
 
-const getShape = pointsQtd => {
-    let points = [];
-    for (let i = 0; i < pointsQtd; i++) {
-        points.push(getPoint());
-    }
 
-    return {
-        id: (Math.random() * 100000).toFixed(0),
-        points,
+    for (const point of points) {
+        let y = point.y;
+        let x = point.x;
+        m[y][x] = '1 ';
     }
-}
-
-const scaleX = (factor, shape) => {
-    let points = [];
-    let b = new Bresenham();
-    for (let i = 0; i < shape.points.length; i++) {
-        let segment = b.buildLine(
-            new OrderedPair(shape.points[i].x, shape.points[i].y),
-            new OrderedPair(shape.points[i].x, shape.points[i].y),
-        );
-        points = points.concat(segment)
-      
-    }
-    return points;
+    
+    /* for (let y = m.length - 1; y >= 0; y--) {
+        let line = '';
+        for (let x = 0; x < m.length; x++) {
+            line += m[y][x];
+        }
+        console.log(line);
+    } */
 }
 
 
-let shape = getShape(5);
+let brsh = new Bresenham(10);
 
-let a = scaleX(2, shape);
+let p1 = new OrderedPair(0, 4);
+let p2 = new OrderedPair(5, 2);
 
-console.log(shape);
-console.log(a);
+let points = brsh.buildLine(p1, p2);
+
+// console.log(points);
+renderOnTerminal(brsh.matrix, points);

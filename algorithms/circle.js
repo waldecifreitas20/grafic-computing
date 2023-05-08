@@ -29,7 +29,7 @@ function buildCircle(r) {
 		points.push({ x: y, y: -x  })//8o. oct
 
 	}
-	console.log(points);
+
 	return points;
 }
 

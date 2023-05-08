@@ -37,12 +37,13 @@ export default class Bresenham {
         }
 
         if (y1 > y2) {
-            if (y2 < 0) {
+            // CAN BE A BUG
+           /*  if (y2 < 0) {
                 y2 *= -1;
             }
             if (y1 < 0) {
                 y1 *= -1;
-            }
+            } */
             y1 = this.matrix.length - 1 - y1;
             y2 = this.matrix.length - 1 - y2;
             this._changeY = true;
@@ -68,12 +69,14 @@ export default class Bresenham {
         y1 = axis['y1'];
         y2 = axis['y2'];
 
+        console.log(axis);
+        
         let M = (y2 - y1) / (x2 - x1);
         let e = M - 0.5;
         let x = x1;
         let y = y1;
-
-        this._reflectedPointsLocation.push(new OrderedPair(x, y,'0  '));
+        console.log(M);
+        this._reflectedPointsLocation.push(new OrderedPair(x, y));
 
         while (x < x2) {
             if (e >= 0) {
@@ -83,7 +86,7 @@ export default class Bresenham {
 
             x++;
             e += M;
-
+            console.log(e);
             this._reflectedPointsLocation.push(new OrderedPair(x, y,));
         }
         this._disreflectMatrix();

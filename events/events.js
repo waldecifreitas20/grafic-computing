@@ -39,7 +39,8 @@ const _refillSelects = () => {
 }
 
 function enableEvents() {
-    let bresenham = new Bresenham(10);
+    let bresenham = new Bresenham();
+    
     // BRESENHAM
     document.getElementById('build-line-btn').addEventListener('click', () => {
         // INPUTS
@@ -66,14 +67,14 @@ function enableEvents() {
         _refillSelects();
     });
 
-    // ADD POINT INPUT
-    document.getElementById('add-edge-btn').addEventListener('click', () => {
-        let edgeId = generateRamdomId();
-        screen.addEdgeInput(edgeId);
+    // ADD VERTEX INPUT
+    document.getElementById('add-vertex-btn').addEventListener('click', () => {
+        let vertexId = generateRamdomId();
+        screen.addVertexInput(vertexId);
 
-        // REMOVE EDGE INPUT
-        document.getElementById(`remove-edge-btn-${edgeId}`).addEventListener('click', () => {
-            screen.removeEdgeInput(edgeId);
+        // REMOVE VERTEX INPUT
+        document.getElementById(`remove-vertex-btn-${vertexId}`).addEventListener('click', () => {
+            screen.removeVertexInput(vertexId);
         });
     });
 
@@ -90,7 +91,6 @@ function enableEvents() {
             points.push(new OrderedPair(x, y));
         }
 
-        let bresenham = new Bresenham(10);
         let polyline = [];
         for (let i = 1; i < points.length; i++) {
             let pointA = points[i - 1];
@@ -132,28 +132,49 @@ function enableEvents() {
 
     // CREATE CURVA
     document.getElementById('build-curve-btn').addEventListener('click', () => {
-        /*   const origin = Number.parseInt(document.getElementById('radius-input').value);
-          const y = Number(document.getElementById('circle-y-axis-input').value);
-          const x = Number(document.getElementById('circle-x-axis-input').value);
-   */
-        let p0 = { x: 0, y: 0 };
-        let pc = { x: 10, y: -15 };
-        let p1 = { x: 15, y: 0 };
-
-        let interpolations = buildCurve(p0, pc, p1, 20);
-
-        let points = [].concat(interpolations);
+        const smoothness = Number.parseInt(document.getElementById('curve-smoothness-input').value) +1;
 
 
-        /* let points = [];
-        for (let i = 1; i < interpolations.length; i++) {
-            let p1 = interpolations[i - 1];
-            let p2 = interpolations[i];
+        let p0 = {
+            x: Number(document.getElementById('curve-ox-axis-input').value),
+            y: Number(document.getElementById('curve-oy-axis-input').value),
+        };
+        let pc = {
+            x: Number(document.getElementById('curve-c1x-axis-input').value),
+            y: Number(document.getElementById('curve-c1y-axis-input').value),
+            
+        };
+        let p1 = {
+            x: Number(document.getElementById('curve-fx-axis-input').value),
+            y: Number(document.getElementById('curve-fy-axis-input').value),
+            
+        };
+      /*   
+        let p0 = {x: 0,y:0};
+        let pc = {x: 0,y:-10};
+        let p1 = {x: 10,y:0}; */
 
-            let line = bresenham.buildLine(p1, p2);
+        let interpolations = buildCurve(p0, pc, p1, smoothness);
+        
+       /*  let l1 = bresenham.buildLine(interpolations[0],interpolations[1]);
+
+        let l2 = bresenham.buildLine(interpolations[1],interpolations[2]);
+        let l3 = bresenham.buildLine(interpolations[2],interpolations[3]); 
+        let l4 = bresenham.buildLine(interpolations[3],interpolations[4]); */
+       
+       
+    //    console.log(interpolations);
+        
+        let points = []
+        for (let i = 0; i < smoothness; i++) {
+            let line = bresenham.buildLine(interpolations[i],interpolations[i+1]);
             points = points.concat(line);
-        } */
+            
+            
+        }
+        // let points = [].concat([...l1, ...l2,...l3,...l4]);
 
+        
         let curve = new Shape(points);
         DATABASE.saveShape(curve);
 

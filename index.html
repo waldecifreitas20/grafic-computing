@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="X-UA-Compatible" content="IE=vertex">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./css/main.css">
         <title>Computação Gráfica</title>
@@ -23,13 +23,13 @@
                     <h3>Reta</h3>
                     <div id="origin-input" class="input-block">
                         <label>Ponto origem (x1,y1)</label>
-                        <input type="number" value="0" min="0" max="42" id="x1-axis-input" class="axis-input">
-                        <input type="number" value="0" min="0" max="28" id="y1-axis-input" class="axis-input">
+                        <input type="number" value="0" max="42" id="x1-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="y1-axis-input" class="axis-input">
                     </div>
                     <div id="destiny-input" class="input-block">
                         <label>Ponto Destino (x2,y2)</label>
-                        <input type="number" value="0" min="0" max="84" id="x2-axis-input" class="axis-input">
-                        <input type="number" value="0" min="0" max="54" id="y2-axis-input" class="axis-input">
+                        <input type="number" value="0" max="84" id="x2-axis-input" class="axis-input">
+                        <input type="number" value="0" max="54" id="y2-axis-input" class="axis-input">
                     </div>
                     <input type="button" id="build-line-btn" class="btn build-btn" value="Desenhar Reta">
 
@@ -44,15 +44,15 @@
                 <!-- POLYLINES -->
                 <section id="polyline-building-section">
                     <h3>Polilinhas</h3>
-                    <div id="edges-block">
+                    <div id="vertexs-block">
                         <div class="polyline-input-block">
-                            <label>Aresta (x,y)</label>
-                            <input type="number" value="0" min="0" max="42" class="polyline-x-input">
-                            <input type="number" value="0" min="0" max="28" class="polyline-y-input">
+                            <label>Vértice (x,y)</label>
+                            <input type="number" value="0" max="42" class="axis-input polyline-x-input">
+                            <input type="number" value="0" max="28" class="axis-input polyline-y-input">
 
                         </div>
                     </div>
-                    <input type="button" id="add-edge-btn" class="btn add-btn" value="Adicionar Aresta">
+                    <input type="button" id="add-vertex-btn" class="btn add-btn" value="Adicionar Aresta">
                     <input type="button" id="build-polyline-btn" class="btn build-btn" value="Desenhar Objeto">
 
                     <!-- POINTS-LIST -->
@@ -68,7 +68,7 @@
                     <h3>Círculo</h3>
                     <div id="radius-input-block" class="input-block">
                         <label>Raio (px)</label>
-                        <input type="number" value="0" min="0" max="27" id="radius-input" class="axis-input">
+                        <input type="number" value="0" max="27" id="radius-input" class="axis-input">
                     </div>
                     <div id="radius-input-block" class="input-block">
                         <label>Centro (x,y)</label>
@@ -90,11 +90,11 @@
 
                     <div id="curve-points-input-block" class="input-block">
                         <label>Pontos de Suavidade </label>
-                        <input type="number" value="1" min="1" id="curve-smoothness-input" class="axis-input">
+                        <input type="number" value="3" min="2" id="curve-smoothness-input" class="axis-input">
                     </div>
                     <div id="curve-origin-input-block" class="input-block">
                         <label>Origem (x,y)</label>
-                        <input type="number" value="0" max="42" id="curve-ox-x-input" class="axis-input">
+                        <input type="number" value="0" max="42" id="curve-ox-axis-input" class="axis-input">
                         <input type="number" value="0" max="28" id="curve-oy-axis-input" class="axis-input">
                     </div>
                     <div id="curve-c1-input-block" class="input-block">

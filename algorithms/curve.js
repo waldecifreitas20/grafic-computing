@@ -1,10 +1,9 @@
 function linearInterpolation(p1, p2, t) {
-
     let x = p1.x * (1 - t) + p2.x * t;
     let y = p1.y * (1 - t) + p2.y * t;
 
-    return { x, y };
-    // return { x: Math.round(x), y: Math.round(y) };
+    // return { x, y };
+    return { x: Math.round(x), y: Math.round(y) };
 }
 
 function interpolations(p0, p1, p2, t) {
