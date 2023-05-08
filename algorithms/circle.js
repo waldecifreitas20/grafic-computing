@@ -1,13 +1,15 @@
+import OrderedPair from "../models/OrderedPair.js";
+
 function buildCircle(r) {
 	let x = 0;
 	let y = r;
 	let e = -r;
 	let points = [];
 
-	points.push({ x: x , y: y })
-	points.push({ x: y, y: x  })
-	points.push({ x: -y, y: -x  })
-	points.push({ x: -x , y: -y })
+	points.push(new OrderedPair(x,y))
+	points.push(new OrderedPair(y,x))
+	points.push(new OrderedPair(-y,-x))
+	points.push(new OrderedPair(-x,-y))
 
 	while (x <= y) {
 		e += 2 * x + 1;
@@ -18,15 +20,15 @@ function buildCircle(r) {
 			y--;
 		}
 
-		points.push({ x: y, y: x  })//1o. oct
-		points.push({ x: x , y: y })//2o. oct
-		points.push({ x: -x , y: y })//3o. oct
-		points.push({ x: -y, y: x  })//4o.oct
+		points.push(new OrderedPair(y,x))//1o. oct
+		points.push(new OrderedPair(x,y))//2o. oct
+		points.push(new OrderedPair(-x,y))//3o. oct
+		points.push(new OrderedPair(-y,x))//4o.oct
 
-		points.push({ x: -y, y: -x  })//5o. oct
-		points.push({ x: -x , y: -y })//6o. oct
-		points.push({ x: x , y: -y })//7o. oct
-		points.push({ x: y, y: -x  })//8o. oct
+		points.push(new OrderedPair(-y,-x))//5o. oct
+		points.push(new OrderedPair(-x,-y))//6o. oct
+		points.push(new OrderedPair(x,-y))//7o. oct
+		points.push(new OrderedPair(y,-x))//8o. oct
 
 	}
 

@@ -130,10 +130,9 @@ function enableEvents() {
         _refillSelects();
     });
 
-    // CREATE CURVA
+    // CREATE CURVE
     document.getElementById('build-curve-btn').addEventListener('click', () => {
         const smoothness = Number.parseInt(document.getElementById('curve-smoothness-input').value) +1;
-
 
         let p0 = {
             x: Number(document.getElementById('curve-ox-axis-input').value),
@@ -149,32 +148,15 @@ function enableEvents() {
             y: Number(document.getElementById('curve-fy-axis-input').value),
             
         };
-      /*   
-        let p0 = {x: 0,y:0};
-        let pc = {x: 0,y:-10};
-        let p1 = {x: 10,y:0}; */
-
+      
         let interpolations = buildCurve(p0, pc, p1, smoothness);
-        
-       /*  let l1 = bresenham.buildLine(interpolations[0],interpolations[1]);
-
-        let l2 = bresenham.buildLine(interpolations[1],interpolations[2]);
-        let l3 = bresenham.buildLine(interpolations[2],interpolations[3]); 
-        let l4 = bresenham.buildLine(interpolations[3],interpolations[4]); */
-       
-       
-    //    console.log(interpolations);
-        
-        let points = []
+            
+        let points = [];
         for (let i = 0; i < smoothness; i++) {
             let line = bresenham.buildLine(interpolations[i],interpolations[i+1]);
-            points = points.concat(line);
-            
-            
+            points = points.concat(line);            
         }
-        // let points = [].concat([...l1, ...l2,...l3,...l4]);
-
-        
+               
         let curve = new Shape(points);
         DATABASE.saveShape(curve);
 
