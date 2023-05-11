@@ -16,6 +16,7 @@
         </div>
         <div id="side-bar">
 
+            <!-- SHAPES CREATIONS -->
             <div id="shape-creation">
                 <h2>Criação de Formas</h2>
                 <!-- BRESENHAM -->
@@ -120,18 +121,38 @@
             <!-- SHAPES CONTROLLER -->
             <div id="shape-control">
                 <h2>Controle das Formas</h2>
+
+                <!-- TRANSLATION -->
                 <section id="translation-section">
                     <h3>Translação</h3>
                     <label for="translation-select">Id da forma:</label>
-                    <select class="transformation-select" id="translation-select">
+                    <select class="shape-control-select" id="translation-select">
                         <option value="alo"></option>
                     </select>
-                    <div id="translation-controller">
-                        <input type="number" id="translation-x" value="0" placeholder="Eixo X">
-                        <input type="number" id="translation-y" value="0" placeholder="Eixo Y">
+                    <div id="translation-controller" class="input-block">
+                        <label for="translation-x">Eixo X</label>
+                        <input type="number" id="translation-x" class="axis-input" value="0" placeholder="Eixo X">
+                        <label for="translation-y">Eixo Y</label>
+                        <input type="number" id="translation-y" class="axis-input" value="0" placeholder="Eixo Y">
                     </div>
                     <button id="btn-translation">Aplicar Translação</button>
                 </section>
+
+                <!-- SCALE -->
+                <section id="scale-section">
+                    <h3>Escala</h3>
+                    <label for="scale-select">Id da forma:</label>
+                    <select class="shape-control-select" id="scale-select">
+                    </select>
+                    <div id="scale-controller" class="input-block">
+                        <label for="scale-factor">Fator Eixo X</label>
+                        <input type="number" id="scale-factor-x" class="axis-input" min="0" value="1" placeholder="Fator">
+                        <label for="scale-factor">Fator Eixo y</label>
+                        <input type="number" id="scale-factor-y" class="axis-input" min="0" value="1" placeholder="Fator">
+                    </div>
+                    <button id="btn-scale">Aplicar Escala</button>
+                </section>
+
             </div>
         </div>
     </body>

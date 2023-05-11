@@ -12,6 +12,9 @@ body {
     display: flex;
 }
 
+section {
+    margin-bottom: 10px;
+}
 #side-bar {
     display: grid;
     padding: 10px;

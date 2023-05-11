@@ -26,7 +26,7 @@ const _refillSelects = () => {
         IT WILL REBUILD THE OPTIONS 
         TO ALL SELECTS
     */
-    let selects = document.getElementsByClassName('transformation-select');
+    let selects = document.getElementsByClassName('shape-control-select');
     let ids = DATABASE.getShapesId();
 
     for (const select of selects) {
@@ -38,9 +38,19 @@ const _refillSelects = () => {
     }
 }
 
+const _multipleBresenham = segments => {
+    let bresenham = new Bresenham();
+    let points = [];
+    for (let i = 1; i < segments.length; i++) {
+        let line = bresenham.buildLine(segments[i - 1], segments[i]);
+        points = points.concat(line);
+    }
+
+    return points;
+}
 function enableEvents() {
     let bresenham = new Bresenham();
-    
+
     // BRESENHAM
     document.getElementById('build-line-btn').addEventListener('click', () => {
         // INPUTS
@@ -132,7 +142,7 @@ function enableEvents() {
 
     // CREATE CURVE
     document.getElementById('build-curve-btn').addEventListener('click', () => {
-        const smoothness = Number.parseInt(document.getElementById('curve-smoothness-input').value) +1;
+        const smoothness = Number.parseInt(document.getElementById('curve-smoothness-input').value) + 1;
 
         let p0 = {
             x: Number(document.getElementById('curve-ox-axis-input').value),
@@ -141,22 +151,25 @@ function enableEvents() {
         let pc = {
             x: Number(document.getElementById('curve-c1x-axis-input').value),
             y: Number(document.getElementById('curve-c1y-axis-input').value),
-            
+
         };
         let p1 = {
             x: Number(document.getElementById('curve-fx-axis-input').value),
             y: Number(document.getElementById('curve-fy-axis-input').value),
-            
+
         };
-      
+
         let interpolations = buildCurve(p0, pc, p1, smoothness);
-            
-        let points = [];
+
+        /*
+         let points = [];
         for (let i = 0; i < smoothness; i++) {
             let line = bresenham.buildLine(interpolations[i],interpolations[i+1]);
             points = points.concat(line);            
-        }
-               
+        } 
+        */
+        let points = _multipleBresenham(interpolations);
+
         let curve = new Shape(points);
         DATABASE.saveShape(curve);
 
@@ -181,6 +194,32 @@ function enableEvents() {
         let shape = DATABASE.getShapeById(shapeId);
 
         transformation.translate(shape, translateOnX, translateOnY);
+        DATABASE.updateShape(shape);
+        screen.buildCanvas();
+
+    });
+
+    // APPLY SCALE
+    document.getElementById('btn-scale').addEventListener('click', () => {
+        let shapeId = document.getElementById('scale-select').value;
+        let scaleXFactor = Number(document.getElementById('scale-factor-x').value);
+        let scaleYFactor = Number(document.getElementById('scale-factor-y').value);
+
+        let shape = DATABASE.getShapeById(shapeId);
+
+        // SHAPE CENTER
+        let center = shape.getCenter();
+        // SET SHAPE TO CENTER
+        transformation.translate(shape, -center.x, -center.y);
+        // APPLY SCALE
+        transformation.scale(shape, scaleXFactor, scaleYFactor);
+
+        shape.points = _multipleBresenham(shape.points);
+        // let l1 = bresenham.buildLine(shape.points[0], shape.points[1]);
+        // shape.points = l1.concat(shape.points);
+        // SET SHAPE TO ORIGINAL POSITION
+        transformation.translate(shape, center.x, center.y);
+
         DATABASE.updateShape(shape);
         screen.buildCanvas();
 

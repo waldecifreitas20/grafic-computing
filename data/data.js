@@ -42,7 +42,7 @@ class AppData {
         }
         return ids;
     }
-
+    
     getShapeById(id) {
         for (const shape of this.shapes) {
             if (id == shape.id) {
