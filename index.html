@@ -69,7 +69,7 @@
                     <h3>Círculo</h3>
                     <div id="radius-input-block" class="input-block">
                         <label>Raio (px)</label>
-                        <input type="number" value="0" max="27" id="radius-input" class="axis-input">
+                        <input type="number" value="0" min="0" max="27" id="radius-input" class="axis-input">
                     </div>
                     <div id="radius-input-block" class="input-block">
                         <label>Centro (x,y)</label>
@@ -126,9 +126,7 @@
                 <section id="translation-section">
                     <h3>Translação</h3>
                     <label for="translation-select">Id da forma:</label>
-                    <select class="shape-control-select" id="translation-select">
-                        <option value="alo"></option>
-                    </select>
+                    <select class="shape-control-select" id="translation-select"></select>
                     <div id="translation-controller" class="input-block">
                         <label for="translation-x">Eixo X</label>
                         <input type="number" id="translation-x" class="axis-input" value="0" placeholder="Eixo X">
@@ -146,13 +144,43 @@
                     </select>
                     <div id="scale-controller" class="input-block">
                         <label for="scale-factor">Fator Eixo X</label>
-                        <input type="number" id="scale-factor-x" class="axis-input" min="0" value="1" placeholder="Fator">
+                        <input type="number" id="scale-factor-x" class="axis-input" min="0" value="1"
+                            placeholder="Fator">
                         <label for="scale-factor">Fator Eixo y</label>
-                        <input type="number" id="scale-factor-y" class="axis-input" min="0" value="1" placeholder="Fator">
+                        <input type="number" id="scale-factor-y" class="axis-input" min="0" value="1"
+                            placeholder="Fator">
                     </div>
                     <button id="btn-scale">Aplicar Escala</button>
                 </section>
 
+                <!-- ROTATION -->
+                <section id="rotation-section">
+                    <h3>Rotatação</h3>
+                    <label for="rotation-select">Id da forma:</label>
+                    <select class="shape-control-select" id="rotation-select">
+                    </select>
+                    <!-- PIVOT -->
+                    <label for="rotation-pivot-select">Tipo do Pivô</label>
+                    <select id="rotation-pivot-select">
+                        <option value="center">Centro</option>
+                        <option value="origin">Origem</option>
+                        <option value="random">Arbitrário</option>
+                    </select>
+
+                    <div id="arbitrarie-pivot-inputs" class="input-block hidden">
+                        <label>Pivô:</label>
+                        <input type="number" id="rotation-x" class="axis-input" value="0" placeholder="Eixo X">
+                        <input type="number" id="rotation-y" class="axis-input" value="0" placeholder="Eixo Y">
+                    </div>
+
+                    <!-- ROTATION ANGLE -->
+                    <div id="rotation-controller" class="input-block">
+                        <label for="rotation-factor">Ângulo°:</label>
+                        <input type="number" id="rotation-angle" class="axis-input" min="0" value="45"
+                            placeholder="Fator">
+                    </div>
+                    <button id="btn-rotation">Aplicar Rotação</button>
+                </section>
             </div>
         </div>
     </body>

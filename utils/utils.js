@@ -7,6 +7,7 @@ function createMatrix(length, point) {
             matrix[l].push(point);
         }
     }
+ 
     
     return matrix;
 }
@@ -25,6 +26,20 @@ function renderOnTerminal(matrix, points) {
     }
 }
 
+let convertToRadiuns = angle => Number((angle * Math.PI / 180).toFixed(6));
+
+let sinOf = angle => {
+    let radiuns = convertToRadiuns(angle);
+    let sin = Number(Math.sin(radiuns).toFixed(5));
+    return sin;
+}
+let cosOf = angle => {
+    let radiuns = convertToRadiuns(angle);
+    let cos = Number(Math.cos(radiuns).toFixed(5));
+    return cos;
+}
+
+
 
 function generateRamdomId() {
     return (Math.random() * 100000).toFixed(0);
@@ -34,4 +49,7 @@ export {
     createMatrix,
     renderOnTerminal,
     generateRamdomId,
+    convertToRadiuns,
+    sinOf,
+    cosOf,
 };

@@ -8,46 +8,6 @@ import transformation from '../algorithms/transformation.js';
 import { generateRamdomId } from "../utils/utils.js";
 import buildCurve from "../algorithms/curve.js";
 
-const _renderOnScreen = (cardListId, shape) => {
-    screen.renderShape(shape);
-    screen.addCardTo(cardListId, shape);
-}
-
-const _setDeleteButton = shapeId => {
-    document.getElementById(`btn-${shapeId}`).addEventListener('click', () => {
-        screen.removePointCardList(shapeId);
-        _refillSelects();
-    });
-}
-
-const _refillSelects = () => {
-    /* 
-        AFTER DELETE OR ADD A SHAPE, 
-        IT WILL REBUILD THE OPTIONS 
-        TO ALL SELECTS
-    */
-    let selects = document.getElementsByClassName('shape-control-select');
-    let ids = DATABASE.getShapesId();
-
-    for (const select of selects) {
-        select.innerHTML = '';
-        for (const id of ids) {
-            let selectOption = `<option value="${id}">${id}</option>`;
-            select.innerHTML += selectOption;
-        }
-    }
-}
-
-const _multipleBresenham = segments => {
-    let bresenham = new Bresenham();
-    let points = [];
-    for (let i = 1; i < segments.length; i++) {
-        let line = bresenham.buildLine(segments[i - 1], segments[i]);
-        points = points.concat(line);
-    }
-
-    return points;
-}
 function enableEvents() {
     let bresenham = new Bresenham();
 
@@ -129,7 +89,7 @@ function enableEvents() {
         const x = Number(document.getElementById('circle-x-axis-input').value);
 
         let points = buildCircle(radius);
-        let circle = new Shape(points);
+        let circle = new Shape(points, true);
         transformation.translate(circle, x, y);
 
         DATABASE.saveShape(circle);
@@ -212,11 +172,16 @@ function enableEvents() {
         // SET SHAPE TO CENTER
         transformation.translate(shape, -center.x, -center.y);
         // APPLY SCALE
-        transformation.scale(shape, scaleXFactor, scaleYFactor);
 
-        shape.points = _multipleBresenham(shape.points);
+        if (!shape.isCircle) {
+            transformation.scale(shape, scaleXFactor, scaleYFactor);
+            shape.points = _multipleBresenham(shape.points);
+        } else {
+            let radius = (shape.getWidth() / 2) * scaleXFactor;
+            shape.points = buildCircle(radius);
+        }
         // let l1 = bresenham.buildLine(shape.points[0], shape.points[1]);
-        // shape.points = l1.concat(shape.points);
+        //  shape.points = l1.concat(shape.points);
         // SET SHAPE TO ORIGINAL POSITION
         transformation.translate(shape, center.x, center.y);
 
@@ -224,6 +189,87 @@ function enableEvents() {
         screen.buildCanvas();
 
     });
+
+    // APPLY ROTATION
+    document.getElementById('btn-rotation').addEventListener('click', () => {
+        let shapeId = document.getElementById('rotation-select').value;
+        let angle = Number(document.getElementById('rotation-angle').value);
+        let type = document.getElementById('rotation-pivot-select').value;
+
+        let shape = DATABASE.getShapeById(shapeId);
+
+        let pivot;
+        if (type == 'center') {
+            pivot = shape.getCenter();
+        } else if (type == 'origin') {
+            pivot = {x: 0, y:0};
+        } else {
+            let x = Number(document.getElementById('rotation-x').value);
+            let y = Number(document.getElementById('rotation-y').value);
+            pivot = {x, y};
+        }
+        console.log(pivot);
+        transformation.translate(shape, -pivot.x, -pivot.y);
+        transformation.rotation(shape, angle);
+        transformation.translate(shape, pivot.x, pivot.y);
+        DATABASE.updateShape(shape);
+        screen.buildCanvas();
+
+    });
+
+    // SHOW ARBITRARIE PIVOT INPUT
+    document.getElementById('rotation-pivot-select').addEventListener('change', () => {
+        let type = document.getElementById('rotation-pivot-select').value;
+        let inputBlock = document.getElementById('arbitrarie-pivot-inputs');
+        if (type=='random') {
+            inputBlock.setAttribute('class', 'showed');
+        } else {
+            inputBlock.setAttribute('class', 'hidden');
+        }
+    });
+
 }
+
+const _renderOnScreen = (cardListId, shape) => {
+    screen.renderShape(shape);
+    screen.addCardTo(cardListId, shape);
+}
+
+const _setDeleteButton = shapeId => {
+    document.getElementById(`btn-${shapeId}`).addEventListener('click', () => {
+        screen.removePointCardList(shapeId);
+        _refillSelects();
+    });
+}
+
+const _refillSelects = () => {
+    /* 
+        AFTER DELETE OR ADD A SHAPE, 
+        IT WILL REBUILD THE OPTIONS 
+        TO ALL SELECTS
+    */
+    let selects = document.getElementsByClassName('shape-control-select');
+    let ids = DATABASE.getShapesId();
+
+    for (const select of selects) {
+        select.innerHTML = '';
+        for (const id of ids) {
+            let selectOption = `<option value="${id}">${id}</option>`;
+            select.innerHTML += selectOption;
+        }
+    }
+}
+
+const _multipleBresenham = segments => {
+    let bresenham = new Bresenham();
+    let points = [];
+    for (let i = 1; i < segments.length; i++) {
+        let line = bresenham.buildLine(segments[i - 1], segments[i]);
+        points = points.concat(line);
+    }
+
+    return points;
+}
+
 
 export default enableEvents;

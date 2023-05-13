@@ -87,7 +87,7 @@ class Bresenham {
         }
         console.log(this._reflectedPointsLocation);
 
-       this._disreflectMatrix();
+        this._disreflectMatrix();
 
         let points = this.pointsLocation.copyWithin();
         this.pointsLocation = [];
@@ -189,7 +189,7 @@ function renderOnTerminal(matrix, points) {
         let x = point.x;
         m[y][x] = '1 ';
     }
-    
+
     /* for (let y = m.length - 1; y >= 0; y--) {
         let line = '';
         for (let x = 0; x < m.length; x++) {
@@ -208,4 +208,29 @@ let p2 = new OrderedPair(5, 2);
 let points = brsh.buildLine(p1, p2);
 
 // console.log(points);
-renderOnTerminal(brsh.matrix, points);
+// renderOnTerminal(brsh.matrix, points);
+let x = 10;
+let y = 10;
+
+let convertToRadiuns = angule => Number((angule * Math.PI / 180).toFixed(6));
+
+let sinOf = angule => {
+    let radiuns = convertToRadiuns(angule);
+    let sin = Number(Math.sin(radiuns).toFixed(5));
+    return sin;
+}
+let cosOf = angule => {
+    let radiuns = convertToRadiuns(angule);
+    let cos = Number(Math.cos(radiuns).toFixed(5));
+    return cos;
+}
+
+
+
+
+let angule = 90;
+
+
+console.log(Number(Math.cos(1.5708).toFixed(5)));
+console.log(sinOf(46));
+console.log(cosOf(46));

@@ -1,21 +1,30 @@
 import { generateRamdomId } from "../utils/utils.js";
 
 export default class Shape {
-    constructor(points) {
+    constructor(points, isCircle = false) {
         this.id = generateRamdomId();
         this.points = points;
+        this.isCircle = isCircle;
     }
 
     getCenter() {
-        let averageY = (this._getHeighestY()+this._getLowestY())/2;
-        let averageX = (this._getHeighestX()+this._getLowestX())/2;
+        let averageY = (this._getHeighestY() + this._getLowestY()) / 2;
+        let averageX = (this._getHeighestX() + this._getLowestX()) / 2;
         console.log({
-            hy : this._getHeighestY(),
-            ly : this._getLowestY(),
-            hx : this._getHeighestX(),
-            ly : this._getLowestX(),
+            hy: this._getHeighestY(),
+            ly: this._getLowestY(),
+            hx: this._getHeighestX(),
+            ly: this._getLowestX(),
         });
-        return {x: Math.round(averageX), y: Math.round(averageY)};
+        return { x: averageX, y: averageY };
+    }
+    getWidth() {
+        let width = this._getHeighestX() - this._getLowestX();
+        return width < 0 ? -width : width;
+    }
+    getHeight() {
+        let height = this._getHeighestY() - this._getLowestY();
+        return height < 0 ? -height : height;
     }
 
     _getHeighestY() {
@@ -25,7 +34,7 @@ export default class Shape {
                 major = point.y;
             }
         }
-        return major == 0? 1 : major;
+        return major == 0 ? 1 : major;
     }
 
     _getLowestY() {
@@ -35,7 +44,7 @@ export default class Shape {
                 minimal = point.y;
             }
         }
-        return minimal == 0? 1 : minimal;
+        return minimal == 0 ? 1 : minimal;
     }
 
     _getHeighestX() {
@@ -57,5 +66,5 @@ export default class Shape {
         }
         return minimal;
     }
-        
+
 }

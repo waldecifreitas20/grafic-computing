@@ -92,8 +92,8 @@ function removeVertexInput(vertexId) {
 
 // PRIVATES
 function _renderPoint(orderedPoint) {
-    let x = (MAX_X / 2 + orderedPoint.x) * PIXEL_SIZE * 1.05;
-    let y = (MAX_Y / 2 - orderedPoint.y) * PIXEL_SIZE * 1.05;
+    let x = (MAX_X / 2 + Math.round(orderedPoint.x)) * PIXEL_SIZE * 1.05;
+    let y = (MAX_Y / 2 - Math.round(orderedPoint.y)) * PIXEL_SIZE * 1.05;
     let brush = canvas.getContext('2d');
 
     brush.fillStyle = orderedPoint.color;
