@@ -7,43 +7,44 @@ function createMatrix(length, point) {
             matrix[l].push(point);
         }
     }
- 
-    
+
+
     return matrix;
 }
 
 function renderOnTerminal(matrix, points) {
     let m = matrix.copyWithin();
 
-     console.log(m);
+    console.log(m);
     for (const point of points) {
         let y = point.y;
         let x = point.x;
         m[y][x] = '1  ';
     }
-    for (let y = matrix.length-1; y >= 0; y--) {
+    for (let y = matrix.length - 1; y >= 0; y--) {
         console.log(m[y]);
     }
 }
 
-let convertToRadiuns = angle => Number((angle * Math.PI / 180).toFixed(6));
+function convertToRadiuns(angle) {
+    return Number((angle * Math.PI / 180).toFixed(6));
+};
 
-let sinOf = angle => {
+function sinOf(angle) {
     let radiuns = convertToRadiuns(angle);
     let sin = Number(Math.sin(radiuns).toFixed(5));
     return sin;
-}
-let cosOf = angle => {
+};
+
+function cosOf(angle) {
     let radiuns = convertToRadiuns(angle);
     let cos = Number(Math.cos(radiuns).toFixed(5));
     return cos;
-}
-
-
+};
 
 function generateRamdomId() {
     return (Math.random() * 100000).toFixed(0);
-}
+};
 
 export {
     createMatrix,
