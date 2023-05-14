@@ -11,7 +11,7 @@
 
     <body>
         <div id="canvas-block">
-            <canvas></canvas>
+            <canvas id="screen"></canvas>
             <input type="button" id="clear-screen-btn" value="Limpar Canvas">
         </div>
         <div id="side-bar">
@@ -122,6 +122,16 @@
             <div id="shape-control">
                 <h2>Controle das Formas</h2>
 
+                <!-- FILL -->
+                <section id="fill-section">
+                    <h3>Preenchimento</h3>
+                    <p class="hidden" id="fill-info">Clique em algum lugar do canvas para preencher</p>
+                    <label for="fill-select">Id da Forma:</label>
+                    <select class="shape-control-select" id="fill-select"></select>
+                    <input type="button" id="btn-fill-scanned" class="btn-fill" value="Preencher por Varredura">
+                    <input type="button" id="btn-fill-recursive" class="btn-fill" value="Preenchimento Recursivo">
+                </section>
+
                 <!-- TRANSLATION -->
                 <section id="translation-section">
                     <h3>Translação</h3>
@@ -181,6 +191,8 @@
                     </div>
                     <button id="btn-rotation">Aplicar Rotação</button>
                 </section>
+
+
             </div>
         </div>
     </body>

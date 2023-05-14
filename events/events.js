@@ -10,6 +10,7 @@ import buildCurve from "../algorithms/curve.js";
 
 function enableEvents() {
     let bresenham = new Bresenham();
+    let isfilling = false;
 
     // BRESENHAM
     document.getElementById('build-line-btn').addEventListener('click', () => {
@@ -121,13 +122,6 @@ function enableEvents() {
 
         let interpolations = buildCurve(p0, pc, p1, smoothness);
 
-        /*
-         let points = [];
-        for (let i = 0; i < smoothness; i++) {
-            let line = bresenham.buildLine(interpolations[i],interpolations[i+1]);
-            points = points.concat(line);            
-        } 
-        */
         let points = _multipleBresenham(interpolations);
 
         let curve = new Shape(points);
@@ -202,11 +196,11 @@ function enableEvents() {
         if (type == 'center') {
             pivot = shape.getCenter();
         } else if (type == 'origin') {
-            pivot = {x: 0, y:0};
+            pivot = { x: 0, y: 0 };
         } else {
             let x = Number(document.getElementById('rotation-x').value);
             let y = Number(document.getElementById('rotation-y').value);
-            pivot = {x, y};
+            pivot = { x, y };
         }
         console.log(pivot);
         transformation.translate(shape, -pivot.x, -pivot.y);
@@ -221,13 +215,55 @@ function enableEvents() {
     document.getElementById('rotation-pivot-select').addEventListener('change', () => {
         let type = document.getElementById('rotation-pivot-select').value;
         let inputBlock = document.getElementById('arbitrarie-pivot-inputs');
-        if (type=='random') {
+        if (type == 'random') {
             inputBlock.setAttribute('class', 'showed');
         } else {
             inputBlock.setAttribute('class', 'hidden');
         }
     });
 
+    // FILL
+    document.getElementById("screen").addEventListener('click', evt => {
+        const MAX_X = 84;
+        const MAX_Y = 54;
+        const ERR_X = 1.0111;
+        const ERR_Y = 1.0161;
+
+        const canvas = document.querySelector('canvas');
+
+        const width = canvas.getAttribute('width');
+        const PIXEL_X = width / MAX_X;
+        const positionX = evt.offsetX;
+        const x = positionX * ERR_X / PIXEL_X;
+
+        const height = canvas.getAttribute('height');
+        const PIXEL_Y = height / MAX_Y;
+        const positionY = evt.offsetY;
+
+        const y = positionY * ERR_Y / PIXEL_Y;
+
+        /* const shapeId = document.getElementById('fill-select').value;
+        let shape = DATABASE.getShapeById(shapeId); */
+
+        let startPoint = new OrderedPair(x - MAX_X / 2, MAX_Y / 2 - y);
+
+        
+
+       /*  screen.renderShape(shape);
+        DATABASE.saveShape(shape); */
+        let fillInfo = document.getElementById('fill-info');
+        fillInfo.setAttribute('class', 'hidden');
+    });
+
+    // ENABLE FILLING
+    for (let i = 0; i < 2; i++) {
+        document.getElementsByClassName('btn-fill')[i]
+            .addEventListener('click', () => {
+
+                let fillInfo = document.getElementById('fill-info');
+                fillInfo.setAttribute('class', 'showed');
+            });
+    }
 }
 
 const _renderOnScreen = (cardListId, shape) => {

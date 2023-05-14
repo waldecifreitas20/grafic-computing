@@ -5,6 +5,7 @@ import Shape from "../models/Shape.js";
 const MAX_X = 84; // MAX QUANTITY OF PIXELS ALONG AXYS X
 const MAX_Y = 54; // MAX QUANTITY OF PIXELS ALONG AXYS X
 const PIXEL_SIZE = 10;
+const CENTER = 1.05;
 let canvas;
 
 function buildCanvas() {
@@ -22,12 +23,11 @@ function buildCanvas() {
         }
     }
     
-    //_setCenterAim('red');
-
+    // _setCenterAim('red');
     for (let shape of DATABASE.shapes) {
         renderShape(shape);
     }
-
+    
 }
 
 function clearCanvas() {
@@ -92,8 +92,8 @@ function removeVertexInput(vertexId) {
 
 // PRIVATES
 function _renderPoint(orderedPoint) {
-    let x = (MAX_X / 2 + Math.round(orderedPoint.x)) * PIXEL_SIZE * 1.05;
-    let y = (MAX_Y / 2 - Math.round(orderedPoint.y)) * PIXEL_SIZE * 1.05;
+    let x = (MAX_X / 2 + Math.round(orderedPoint.x)) * PIXEL_SIZE * CENTER;
+    let y = (MAX_Y / 2 - Math.round(orderedPoint.y)) * PIXEL_SIZE * CENTER;
     let brush = canvas.getContext('2d');
 
     brush.fillStyle = orderedPoint.color;
@@ -105,8 +105,8 @@ function _setCenterAim(color) {
 }
 
 function _renderBackground(orderedPoint, color = 'black') {
-    let x = orderedPoint.x * PIXEL_SIZE * 1.05;
-    let y = orderedPoint.y * PIXEL_SIZE * 1.05;
+    let x = orderedPoint.x * PIXEL_SIZE * CENTER;
+    let y = orderedPoint.y * PIXEL_SIZE * CENTER;
     let brush = canvas.getContext('2d');
 
     brush.fillStyle = color;

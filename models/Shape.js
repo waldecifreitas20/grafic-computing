@@ -27,6 +27,7 @@ export default class Shape {
         return height < 0 ? -height : height;
     }
 
+   
     _getHeighestY() {
         let major = this.points[0].y;
         for (const point of this.points) {

@@ -33,6 +33,25 @@ canvas {
     border: 2px solid black;
 }
 
+#canvas-block {
+    position: fixed;
+    width: min-content;
+    height:600px;
+}
+
+#clear-screen-btn{
+    position: relative;
+    left: 0;
+}
+
+#side-bar {
+    display: block;
+    width: 420px;
+    float: right;
+    position: absolute;
+    right: 0;
+}
+
 .axis-input {
     width: 50px;
 }
