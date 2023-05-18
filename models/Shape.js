@@ -10,24 +10,47 @@ export default class Shape {
     getCenter() {
         let averageY = (this._getHeighestY() + this._getLowestY()) / 2;
         let averageX = (this._getHeighestX() + this._getLowestX()) / 2;
-        console.log({
-            hy: this._getHeighestY(),
-            ly: this._getLowestY(),
-            hx: this._getHeighestX(),
-            ly: this._getLowestX(),
-        });
+    
         return { x: averageX, y: averageY };
     }
     getWidth() {
         let width = this._getHeighestX() - this._getLowestX();
         return width < 0 ? -width : width;
     }
+
     getHeight() {
         let height = this._getHeighestY() - this._getLowestY();
         return height < 0 ? -height : height;
     }
 
+    hasPoint(x, y) {
+        for (const point of this.points) {
+            if (x == point.x && y == point.y) {
+                return true;
+            }
+        }
+        return false;
+    }
    
+    isVertex(x,y) {
+        for (const point of this.points) {
+            if (x == point.x && y == point.y) {
+                return point.isVertex;
+            }
+        }
+        return false;
+    }
+
+    getVertices() {
+        let vertices = [];
+        for (const point of this.points) {
+            if (point.isVertex) {
+                vertices.push(point);
+            }
+        }
+        return vertices;
+    }
+
     _getHeighestY() {
         let major = this.points[0].y;
         for (const point of this.points) {

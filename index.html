@@ -120,12 +120,12 @@
 
             <!-- SHAPES CONTROLLER -->
             <div id="shape-control">
-                <h2>Controle das Formas</h2>
+                <h2>Controle das Formas</h2> 
 
                 <!-- FILL -->
                 <section id="fill-section">
                     <h3>Preenchimento</h3>
-                    <p class="hidden" id="fill-info">Clique em algum lugar do canvas para preencher</p>
+                    <p hidden id="fill-info">Clique em algum lugar do canvas para preencher</p>
                     <label for="fill-select">Id da Forma:</label>
                     <select class="shape-control-select" id="fill-select"></select>
                     <input type="button" id="btn-fill-scanned" class="btn-fill" value="Preencher por Varredura">
@@ -165,7 +165,7 @@
 
                 <!-- ROTATION -->
                 <section id="rotation-section">
-                    <h3>Rotatação</h3>
+                    <h3>Rotação</h3>
                     <label for="rotation-select">Id da forma:</label>
                     <select class="shape-control-select" id="rotation-select">
                     </select>
@@ -177,7 +177,7 @@
                         <option value="random">Arbitrário</option>
                     </select>
 
-                    <div id="arbitrarie-pivot-inputs" class="input-block hidden">
+                    <div id="arbitrarie-pivot-inputs" class="input-block" hidden>
                         <label>Pivô:</label>
                         <input type="number" id="rotation-x" class="axis-input" value="0" placeholder="Eixo X">
                         <input type="number" id="rotation-y" class="axis-input" value="0" placeholder="Eixo Y">

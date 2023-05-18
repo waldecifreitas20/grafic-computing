@@ -1,17 +1,14 @@
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from "../data/data.js";
 import Shape from "../models/Shape.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, MAX_X, MAX_Y } from "../utils/env.js";
 
-const MAX_X = 84; // MAX QUANTITY OF PIXELS ALONG AXYS X
-const MAX_Y = 54; // MAX QUANTITY OF PIXELS ALONG AXYS X
+
 const PIXEL_SIZE = 10;
-const CENTER = 1.05;
+const THICKNESS = 1.05;
 let canvas;
 
 function buildCanvas() {
-    const CANVAS_HEIGHT = 577;
-    const CANVAS_WIDTH = 892;
-
     canvas = document.querySelector('canvas');
 
     canvas.setAttribute('height', CANVAS_HEIGHT.toString());
@@ -22,12 +19,12 @@ function buildCanvas() {
             _renderBackground(new OrderedPair(x, y), 'white');
         }
     }
-    
+
     // _setCenterAim('red');
     for (let shape of DATABASE.shapes) {
         renderShape(shape);
     }
-    
+
 }
 
 function clearCanvas() {
@@ -92,8 +89,8 @@ function removeVertexInput(vertexId) {
 
 // PRIVATES
 function _renderPoint(orderedPoint) {
-    let x = (MAX_X / 2 + Math.round(orderedPoint.x)) * PIXEL_SIZE * CENTER;
-    let y = (MAX_Y / 2 - Math.round(orderedPoint.y)) * PIXEL_SIZE * CENTER;
+    let x = (MAX_X / 2 + Math.round(orderedPoint.x)) * PIXEL_SIZE * THICKNESS;
+    let y = (MAX_Y / 2 - Math.round(orderedPoint.y)) * PIXEL_SIZE * THICKNESS;
     let brush = canvas.getContext('2d');
 
     brush.fillStyle = orderedPoint.color;
@@ -105,8 +102,8 @@ function _setCenterAim(color) {
 }
 
 function _renderBackground(orderedPoint, color = 'black') {
-    let x = orderedPoint.x * PIXEL_SIZE * CENTER;
-    let y = orderedPoint.y * PIXEL_SIZE * CENTER;
+    let x = orderedPoint.x * PIXEL_SIZE * THICKNESS;
+    let y = orderedPoint.y * PIXEL_SIZE * THICKNESS;
     let brush = canvas.getContext('2d');
 
     brush.fillStyle = color;

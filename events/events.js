@@ -8,12 +8,12 @@ import transformation from '../algorithms/transformation.js';
 import { generateRamdomId } from "../utils/utils.js";
 import buildCurve from "../algorithms/curve.js";
 import { MAX_X, MAX_Y, CANVAS_HEIGHT, CANVAS_WIDTH } from "../utils/env.js";
-import fill from "../algorithms/fill.js";
+// import fill from "../algorithms/fill.js";
 
 function enableEvents() {
     let bresenham = new Bresenham();
 
-    // BRESENHAM
+    // BUILD LINE
     document.getElementById('build-line-btn').addEventListener('click', () => {
         // INPUTS
         const x1 = Number.parseInt(document.getElementById('x1-axis-input').value);

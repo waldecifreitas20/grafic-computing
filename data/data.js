@@ -13,6 +13,15 @@ class AppData {
         this.shapes.push(shape);
     }
 
+    hasPoint(x, y) {
+        for (const shape of this.shapes) {
+            if (shape.hasPoint(x,y)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     _hasShape(shapeId) {
         for (const shape of this.shapes) {
             if (shape.id == shapeId) {

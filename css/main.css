@@ -76,11 +76,3 @@ canvas {
     margin: 5px 0;
     background-color: black;
 }
-
-.hidden {
-    display: none;
-}
-
-.showed {
-    display: block;
-}
