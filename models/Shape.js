@@ -1,3 +1,5 @@
+'use strict';
+
 import { generateRamdomId } from "../utils/utils.js";
 
 export default class Shape {
@@ -7,10 +9,14 @@ export default class Shape {
         this.isCircle = isCircle;
     }
 
+    build() {
+        throw 'Abstract method must be implement';
+    }
+
     getCenter() {
         let averageY = (this._getHeighestY() + this._getLowestY()) / 2;
         let averageX = (this._getHeighestX() + this._getLowestX()) / 2;
-    
+
         return { x: averageX, y: averageY };
     }
     getWidth() {
@@ -31,8 +37,8 @@ export default class Shape {
         }
         return false;
     }
-   
-    isVertex(x,y) {
+
+    isVertex(x, y) {
         for (const point of this.points) {
             if (x == point.x && y == point.y) {
                 return point.isVertex;
