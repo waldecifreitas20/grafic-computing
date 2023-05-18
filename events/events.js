@@ -7,10 +7,11 @@ import DATABASE from '../data/data.js';
 import transformation from '../algorithms/transformation.js';
 import { generateRamdomId } from "../utils/utils.js";
 import buildCurve from "../algorithms/curve.js";
+import { MAX_X, MAX_Y, CANVAS_HEIGHT, CANVAS_WIDTH } from "../utils/env.js";
+import fill from "../algorithms/fill.js";
 
 function enableEvents() {
     let bresenham = new Bresenham();
-    let isfilling = false;
 
     // BRESENHAM
     document.getElementById('build-line-btn').addEventListener('click', () => {
@@ -23,14 +24,17 @@ function enableEvents() {
         const cardListId = 'list-points-bresenham';
 
         // ORDEREDS PAIRS
-        let origin = new OrderedPair(x1, y1);
-        let destiny = new OrderedPair(x2, y2);
+        let origin = OrderedPair.buildVertex(x1, y1);
 
+        let destiny = OrderedPair.buildVertex(x2, y2,);
+
+
+    
         //GET LINE POINTS 
         let points = bresenham.buildLine(origin, destiny);
 
         let line = new Shape(points);
-
+    
         DATABASE.saveShape(line);
 
         _renderOnScreen(cardListId, line);
@@ -74,7 +78,7 @@ function enableEvents() {
 
         const shape = new Shape(polyline);
         const cardListId = 'list-polylines';
-
+        
         DATABASE.saveShape(shape);
 
         _renderOnScreen(cardListId, shape);
@@ -174,8 +178,7 @@ function enableEvents() {
             let radius = (shape.getWidth() / 2) * scaleXFactor;
             shape.points = buildCircle(radius);
         }
-        // let l1 = bresenham.buildLine(shape.points[0], shape.points[1]);
-        //  shape.points = l1.concat(shape.points);
+        
         // SET SHAPE TO ORIGINAL POSITION
         transformation.translate(shape, center.x, center.y);
 
@@ -202,7 +205,7 @@ function enableEvents() {
             let y = Number(document.getElementById('rotation-y').value);
             pivot = { x, y };
         }
-        console.log(pivot);
+
         transformation.translate(shape, -pivot.x, -pivot.y);
         transformation.rotation(shape, angle);
         transformation.translate(shape, pivot.x, pivot.y);
@@ -214,54 +217,45 @@ function enableEvents() {
     // SHOW ARBITRARIE PIVOT INPUT
     document.getElementById('rotation-pivot-select').addEventListener('change', () => {
         let type = document.getElementById('rotation-pivot-select').value;
-        let inputBlock = document.getElementById('arbitrarie-pivot-inputs');
-        if (type == 'random') {
-            inputBlock.setAttribute('class', 'showed');
-        } else {
-            inputBlock.setAttribute('class', 'hidden');
-        }
+        const tagId = 'arbitrarie-pivot-inputs';
+
+        _toggleHtmlHiding(() => type != 'random', tagId);
     });
 
     // FILL
     document.getElementById("screen").addEventListener('click', evt => {
-        const MAX_X = 84;
-        const MAX_Y = 54;
-        const ERR_X = 1.0111;
-        const ERR_Y = 1.0161;
+        const ERR_X = 1.0111; // ERROR RATE AT X AXIS
+        const ERR_Y = 1.0161; // ERROR RATE AT Y AXIS
 
-        const canvas = document.querySelector('canvas');
-
-        const width = canvas.getAttribute('width');
-        const PIXEL_X = width / MAX_X;
+        const PIXEL_WIDTH = CANVAS_WIDTH / MAX_X;
         const positionX = evt.offsetX;
-        const x = positionX * ERR_X / PIXEL_X;
+        const x = positionX * ERR_X / PIXEL_WIDTH;
 
-        const height = canvas.getAttribute('height');
-        const PIXEL_Y = height / MAX_Y;
+
+        const PIXEL_HEIGHT = CANVAS_HEIGHT / MAX_Y;
         const positionY = evt.offsetY;
 
-        const y = positionY * ERR_Y / PIXEL_Y;
+        const y = positionY * ERR_Y / PIXEL_HEIGHT;
+
 
         /* const shapeId = document.getElementById('fill-select').value;
         let shape = DATABASE.getShapeById(shapeId); */
 
         let startPoint = new OrderedPair(x - MAX_X / 2, MAX_Y / 2 - y);
 
-        
+        /*  screen.renderShape(shape);
+         DATABASE.saveShape(shape); */
+        /* let fillInfo = document.getElementById('fill-info');
+        fillInfo.setAttribute('class', 'hidden'); */
 
-       /*  screen.renderShape(shape);
-        DATABASE.saveShape(shape); */
-        let fillInfo = document.getElementById('fill-info');
-        fillInfo.setAttribute('class', 'hidden');
+        _toggleHtmlHiding(()=> true, 'fill-info');
     });
 
     // ENABLE FILLING
     for (let i = 0; i < 2; i++) {
         document.getElementsByClassName('btn-fill')[i]
-            .addEventListener('click', () => {
-
-                let fillInfo = document.getElementById('fill-info');
-                fillInfo.setAttribute('class', 'showed');
+            .addEventListener('click', () => {               
+                _toggleHtmlHiding(()=> false, 'fill-info');
             });
     }
 }
@@ -307,5 +301,13 @@ const _multipleBresenham = segments => {
     return points;
 }
 
+const _toggleHtmlHiding = (ishiding, tagId) => {
+    const htmlTag = document.getElementById(tagId);
+    if (ishiding()) {
+        htmlTag.hidden = true;
+    } else {
+        htmlTag.hidden = false;
+    }
+}
 
 export default enableEvents;
