@@ -8,6 +8,7 @@ import transformation from '../algorithms/transformation.js';
 import { generateRamdomId } from "../utils/utils.js";
 import buildCurve from "../algorithms/curve.js";
 import { MAX_X, MAX_Y, CANVAS_HEIGHT, CANVAS_WIDTH } from "../utils/env.js";
+import Polyline from "../models/Polyline.js";
 // import fill from "../algorithms/fill.js";
 
 function enableEvents() {
@@ -66,7 +67,7 @@ function enableEvents() {
             points.push(new OrderedPair(x, y));
         }
 
-        let polyline = [];
+      /*   let polyline = [];
         for (let i = 1; i < points.length; i++) {
             let pointA = points[i - 1];
             let pointB = points[i];
@@ -74,15 +75,15 @@ function enableEvents() {
             polyline = polyline.concat(bresenham.buildLine(pointA, pointB));
         }
         polyline = polyline.concat(bresenham.buildLine(points[points.length - 1], points[0]));
+ */
 
-
-        const shape = new Shape(polyline);
+        const polyline = new Polyline(points);
         const cardListId = 'list-polylines';
         
-        DATABASE.saveShape(shape);
+        DATABASE.saveShape(polyline);
 
-        _renderOnScreen(cardListId, shape);
-        _setDeleteButton(shape.id);
+        _renderOnScreen(cardListId, polyline);
+        _setDeleteButton(polyline.id);
         _refillSelects();
 
     });

@@ -9,7 +9,7 @@ export default class Shape {
         this.isCircle = isCircle;
     }
 
-    build() {
+    rasterize() {
         throw 'Abstract method must be implement';
     }
 
