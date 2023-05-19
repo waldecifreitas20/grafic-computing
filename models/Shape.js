@@ -3,9 +3,9 @@
 import { generateRamdomId } from "../utils/utils.js";
 
 export default class Shape {
-    constructor(points, isCircle = false) {
+    constructor(vertices, isCircle = false) {
         this.id = generateRamdomId();
-        this.points = points;
+        this.vertices = vertices;
         this.isCircle = isCircle;
     }
 
@@ -30,7 +30,7 @@ export default class Shape {
     }
 
     hasPoint(x, y) {
-        for (const point of this.points) {
+        for (const point of this.vertices) {
             if (x == point.x && y == point.y) {
                 return true;
             }
@@ -39,7 +39,7 @@ export default class Shape {
     }
 
     isVertex(x, y) {
-        for (const point of this.points) {
+        for (const point of this.vertices) {
             if (x == point.x && y == point.y) {
                 return point.isVertex;
             }
@@ -49,7 +49,7 @@ export default class Shape {
 
     getVertices() {
         let vertices = [];
-        for (const point of this.points) {
+        for (const point of this.vertices) {
             if (point.isVertex) {
                 vertices.push(point);
             }
@@ -58,8 +58,8 @@ export default class Shape {
     }
 
     _getHeighestY() {
-        let major = this.points[0].y;
-        for (const point of this.points) {
+        let major = this.vertices[0].y;
+        for (const point of this.vertices) {
             if (point.y > major) {
                 major = point.y;
             }
@@ -68,8 +68,8 @@ export default class Shape {
     }
 
     _getLowestY() {
-        let minimal = this.points[0].y;
-        for (const point of this.points) {
+        let minimal = this.vertices[0].y;
+        for (const point of this.vertices) {
             if (point.y < minimal) {
                 minimal = point.y;
             }
@@ -78,8 +78,8 @@ export default class Shape {
     }
 
     _getHeighestX() {
-        let major = this.points[0].x;
-        for (const point of this.points) {
+        let major = this.vertices[0].x;
+        for (const point of this.vertices) {
             if (point.x > major) {
                 major = point.x;
             }
@@ -88,8 +88,8 @@ export default class Shape {
     }
 
     _getLowestX() {
-        let minimal = this.points[0].x;
-        for (const point of this.points) {
+        let minimal = this.vertices[0].x;
+        for (const point of this.vertices) {
             if (point.x < minimal) {
                 minimal = point.x;
             }

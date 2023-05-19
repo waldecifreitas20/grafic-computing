@@ -30,12 +30,12 @@ function enableEvents() {
         let destiny = OrderedPair.buildVertex(x2, y2,);
 
 
-    
+
         //GET LINE POINTS 
         let points = bresenham.buildLine(origin, destiny);
 
         let line = new Shape(points);
-    
+
         DATABASE.saveShape(line);
 
         _renderOnScreen(cardListId, line);
@@ -67,19 +67,19 @@ function enableEvents() {
             points.push(new OrderedPair(x, y));
         }
 
-      /*   let polyline = [];
-        for (let i = 1; i < points.length; i++) {
-            let pointA = points[i - 1];
-            let pointB = points[i];
-
-            polyline = polyline.concat(bresenham.buildLine(pointA, pointB));
-        }
-        polyline = polyline.concat(bresenham.buildLine(points[points.length - 1], points[0]));
- */
+        /*   let polyline = [];
+          for (let i = 1; i < points.length; i++) {
+              let pointA = points[i - 1];
+              let pointB = points[i];
+  
+              polyline = polyline.concat(bresenham.buildLine(pointA, pointB));
+          }
+          polyline = polyline.concat(bresenham.buildLine(points[points.length - 1], points[0]));
+   */
 
         const polyline = new Polyline(points);
         const cardListId = 'list-polylines';
-        
+
         DATABASE.saveShape(polyline);
 
         _renderOnScreen(cardListId, polyline);
@@ -170,16 +170,17 @@ function enableEvents() {
         let center = shape.getCenter();
         // SET SHAPE TO CENTER
         transformation.translate(shape, -center.x, -center.y);
-        // APPLY SCALE
 
-        if (!shape.isCircle) {
-            transformation.scale(shape, scaleXFactor, scaleYFactor);
-            shape.points = _multipleBresenham(shape.points);
-        } else {
-            let radius = (shape.getWidth() / 2) * scaleXFactor;
-            shape.points = buildCircle(radius);
-        }
-        
+        // APPLY SCALE
+        shape.points = transformation.scale(shape, scaleXFactor, scaleYFactor);
+        /*  if (!shape.isCircle) {
+             transformation.scale(shape, scaleXFactor, scaleYFactor);
+             shape.points = _multipleBresenham(shape.points);
+         } else {
+             let radius = (shape.getWidth() / 2) * scaleXFactor;
+             shape.points = buildCircle(radius);
+         }
+          */
         // SET SHAPE TO ORIGINAL POSITION
         transformation.translate(shape, center.x, center.y);
 
@@ -249,14 +250,14 @@ function enableEvents() {
         /* let fillInfo = document.getElementById('fill-info');
         fillInfo.setAttribute('class', 'hidden'); */
 
-        _toggleHtmlHiding(()=> true, 'fill-info');
+        _toggleHtmlHiding(() => true, 'fill-info');
     });
 
     // ENABLE FILLING
     for (let i = 0; i < 2; i++) {
         document.getElementsByClassName('btn-fill')[i]
-            .addEventListener('click', () => {               
-                _toggleHtmlHiding(()=> false, 'fill-info');
+            .addEventListener('click', () => {
+                _toggleHtmlHiding(() => false, 'fill-info');
             });
     }
 }
