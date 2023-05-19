@@ -9,6 +9,7 @@ import { generateRamdomId } from "../utils/utils.js";
 import buildCurve from "../algorithms/curve.js";
 import { MAX_X, MAX_Y, CANVAS_HEIGHT, CANVAS_WIDTH } from "../utils/env.js";
 import Polyline from "../models/Polyline.js";
+import Line from "../models/Line.js";
 // import fill from "../algorithms/fill.js";
 
 function enableEvents() {
@@ -26,15 +27,9 @@ function enableEvents() {
 
         // ORDEREDS PAIRS
         let origin = OrderedPair.buildVertex(x1, y1);
-
         let destiny = OrderedPair.buildVertex(x2, y2,);
 
-
-
-        //GET LINE POINTS 
-        let points = bresenham.buildLine(origin, destiny);
-
-        let line = new Shape(points);
+        let line = new Line(origin, destiny);
 
         DATABASE.saveShape(line);
 
@@ -208,9 +203,12 @@ function enableEvents() {
             pivot = { x, y };
         }
 
+        // APPLY ROTATION
         transformation.translate(shape, -pivot.x, -pivot.y);
         transformation.rotation(shape, angle);
         transformation.translate(shape, pivot.x, pivot.y);
+
+        // UPDATE SHAPE VERTICES
         DATABASE.updateShape(shape);
         screen.buildCanvas();
 
@@ -229,15 +227,15 @@ function enableEvents() {
         const ERR_X = 1.0111; // ERROR RATE AT X AXIS
         const ERR_Y = 1.0161; // ERROR RATE AT Y AXIS
 
+        // CALCULE VIRTUAL POSITION ON CANVAS
         const PIXEL_WIDTH = CANVAS_WIDTH / MAX_X;
-        const positionX = evt.offsetX;
-        const x = positionX * ERR_X / PIXEL_WIDTH;
-
+        const canvasPositionAtX = evt.offsetX;
+        const x = canvasPositionAtX * ERR_X / PIXEL_WIDTH;
 
         const PIXEL_HEIGHT = CANVAS_HEIGHT / MAX_Y;
-        const positionY = evt.offsetY;
+        const canvasPositionAtY = evt.offsetY;
 
-        const y = positionY * ERR_Y / PIXEL_HEIGHT;
+        const y = canvasPositionAtY * ERR_Y / PIXEL_HEIGHT;
 
 
         /* const shapeId = document.getElementById('fill-select').value;
