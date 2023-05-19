@@ -10,6 +10,7 @@ import buildCurve from "../algorithms/curve.js";
 import { MAX_X, MAX_Y, CANVAS_HEIGHT, CANVAS_WIDTH } from "../utils/env.js";
 import Polyline from "../models/Polyline.js";
 import Line from "../models/Line.js";
+import Circle from "../models/Circle.js";
 // import fill from "../algorithms/fill.js";
 
 function enableEvents() {
@@ -89,14 +90,14 @@ function enableEvents() {
         const y = Number(document.getElementById('circle-y-axis-input').value);
         const x = Number(document.getElementById('circle-x-axis-input').value);
 
-        let points = buildCircle(radius);
-        let circle = new Shape(points, true);
+        let circle = new Circle(radius);
         transformation.translate(circle, x, y);
-
+        
         DATABASE.saveShape(circle);
-
+        
         const cardListId = 'list-points-circle';
         _renderOnScreen(cardListId, circle);
+        console.log(circle.id);
         _setDeleteButton(circle.id);
         _refillSelects();
     });
@@ -160,25 +161,7 @@ function enableEvents() {
         let scaleYFactor = Number(document.getElementById('scale-factor-y').value);
 
         let shape = DATABASE.getShapeById(shapeId);
-
-        // SHAPE CENTER
-        let center = shape.getCenter();
-        // SET SHAPE TO CENTER
-        transformation.translate(shape, -center.x, -center.y);
-
-        // APPLY SCALE
-        shape.points = transformation.scale(shape, scaleXFactor, scaleYFactor);
-        /*  if (!shape.isCircle) {
-             transformation.scale(shape, scaleXFactor, scaleYFactor);
-             shape.points = _multipleBresenham(shape.points);
-         } else {
-             let radius = (shape.getWidth() / 2) * scaleXFactor;
-             shape.points = buildCircle(radius);
-         }
-          */
-        // SET SHAPE TO ORIGINAL POSITION
-        transformation.translate(shape, center.x, center.y);
-
+        shape.scale(scaleXFactor, scaleYFactor); 
         DATABASE.updateShape(shape);
         screen.buildCanvas();
 
