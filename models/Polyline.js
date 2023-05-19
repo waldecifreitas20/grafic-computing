@@ -14,10 +14,11 @@ export default class Polyline extends Shape {
             let line;
             if (i == this.vertices.length) {
                 line = bresenham.buildLine(this.vertices[i-1], this.vertices[0]);
-            }else {
+                points = points.concat(line);
+            }else if(this.vertices.length > 2){
                 line = bresenham.buildLine(this.vertices[i - 1], this.vertices[i]);
+                points = points.concat(line);
             }
-            points = points.concat(line);
         }
 
 
