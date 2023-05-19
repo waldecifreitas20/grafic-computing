@@ -13,11 +13,15 @@ export default class Shape {
         throw 'Abstract method must be implement';
     }
 
+    getVertices() {
+        throw 'Abstract method must be implement';
+    }
+
     getCenter() {
         let averageY = (this._getHeighestY() + this._getLowestY()) / 2;
         let averageX = (this._getHeighestX() + this._getLowestX()) / 2;
 
-        return { x: averageX, y: averageY };
+        return { x: Math.round(averageX), y: Math.round(averageY) };
     }
     getWidth() {
         let width = this._getHeighestX() - this._getLowestX();

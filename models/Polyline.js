@@ -3,8 +3,7 @@ import Bresenham from "../algorithms/bresenham.js";
 
 export default class Polyline extends Shape {
     constructor(vertices) {
-        super();
-        this.vertices = vertices;
+        super(vertices);
     }
 
     rasterize() {
@@ -20,7 +19,6 @@ export default class Polyline extends Shape {
                 points = points.concat(line);
             }
         }
-
 
         return points;
     }
