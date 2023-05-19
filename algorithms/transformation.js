@@ -24,8 +24,8 @@ function rotation(shape, rotation, pivot) {
         let nx = x * cosOf(rotation) - y * sinOf(rotation);
         let ny = x * sinOf(rotation) + y * cosOf(rotation);
 
-        shape.vertices[i].x = nx;
-        shape.vertices[i].y = ny;
+        shape.vertices[i].x = Math.floor(nx);
+        shape.vertices[i].y = Math.floor(ny);
     }
 }
 
