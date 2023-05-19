@@ -41,6 +41,11 @@ export default class Circle extends Shape {
         return points;
     }
 
+    scale(factor){
+        if (factor > 0) {
+            this.radius *= factor;
+        }
+    }
 
 
 }

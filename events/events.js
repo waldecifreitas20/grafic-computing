@@ -161,7 +161,12 @@ function enableEvents() {
         let scaleYFactor = Number(document.getElementById('scale-factor-y').value);
 
         let shape = DATABASE.getShapeById(shapeId);
-        shape.scale(scaleXFactor, scaleYFactor); 
+        if (typeof shape != 'Circle') {
+            shape.scale(scaleXFactor, scaleYFactor); 
+        } else {
+            shape.scale(scaleXFactor); 
+        }
+
         DATABASE.updateShape(shape);
         screen.buildCanvas();
 
