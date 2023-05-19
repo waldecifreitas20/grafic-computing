@@ -69,13 +69,13 @@ export default class Bresenham {
         y1 = axis['y1'];
         y2 = axis['y2'];
 
-        console.log(axis);
+
         
         let M = (y2 - y1) / (x2 - x1);
         let e = M - 0.5;
         let x = x1;
         let y = y1;
-        console.log(M);
+
         this._reflectedPointsLocation.push(new OrderedPair(x, y));
 
         while (x < x2) {
@@ -86,7 +86,7 @@ export default class Bresenham {
 
             x++;
             e += M;
-            console.log(e);
+       
             this._reflectedPointsLocation.push(new OrderedPair(x, y,));
         }
         this._disreflectMatrix();

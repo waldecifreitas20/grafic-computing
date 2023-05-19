@@ -34,7 +34,8 @@ function clearCanvas() {
 }
 
 function renderShape(shape) {
-    for (const point of shape.points) {
+    let points = shape.rasterize();
+    for (const point of points) {
         _renderPoint(point);
     }
 }
@@ -52,10 +53,11 @@ function addCardTo(listId, shape) {
     html += `<p class="shape-id"><strong>Id:</strong> ${shape.id}`;
     html += `<button id="btn-${shape.id}">Excluir Desenho</button></p>`;  // delete's button
     html += `<div class="divider"></div>`;
-
+    
+    /* let points = shape.rasterize();
     for (let i = 0; i < shape.points.length; i++) {
         html += `p${i + 1}(${shape.points[i].x}, ${shape.points[i].y}); `;
-    }
+    } */
     html += '</div>';
 
     card.innerHTML = html;
