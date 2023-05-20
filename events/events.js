@@ -14,8 +14,6 @@ import Circle from "../models/Circle.js";
 // import fill from "../algorithms/fill.js";
 
 function enableEvents() {
-    let bresenham = new Bresenham();
-
     // BUILD LINE
     document.getElementById('build-line-btn').addEventListener('click', () => {
         // INPUTS
@@ -24,17 +22,19 @@ function enableEvents() {
         const y1 = Number.parseInt(document.getElementById('y1-axis-input').value);
         const y2 = Number.parseInt(document.getElementById('y2-axis-input').value);
 
-        const cardListId = 'list-points-bresenham';
 
         // ORDEREDS PAIRS
-        let origin = OrderedPair.buildVertex(x1, y1);
-        let destiny = OrderedPair.buildVertex(x2, y2,);
+        let origin = new OrderedPair(x1, y1);
+        let destiny = new OrderedPair(x2, y2,);
 
         let line = new Line(origin, destiny);
 
         DATABASE.saveShape(line);
 
-        _renderOnScreen(cardListId, line);
+        const cardListId = 'list-points-bresenham';
+
+        screen.renderShape(line);
+        screen.addCardTo(cardListId, line);
         _setDeleteButton(line.id);
         _refillSelects();
     });
@@ -63,22 +63,13 @@ function enableEvents() {
             points.push(new OrderedPair(x, y));
         }
 
-        /*   let polyline = [];
-          for (let i = 1; i < points.length; i++) {
-              let pointA = points[i - 1];
-              let pointB = points[i];
-  
-              polyline = polyline.concat(bresenham.buildLine(pointA, pointB));
-          }
-          polyline = polyline.concat(bresenham.buildLine(points[points.length - 1], points[0]));
-   */
-
         const polyline = new Polyline(points);
-        const cardListId = 'list-polylines';
 
         DATABASE.saveShape(polyline);
 
-        _renderOnScreen(cardListId, polyline);
+        const cardListId = 'list-polylines';
+        screen.renderShape(polyline);
+        screen.addCardTo(cardListId, polyline);
         _setDeleteButton(polyline.id);
         _refillSelects();
 
@@ -91,13 +82,13 @@ function enableEvents() {
         const x = Number(document.getElementById('circle-x-axis-input').value);
 
         let circle = new Circle(radius, x, y);
-      //  transformation.translate(circle, x, y);
-        
-        DATABASE.saveShape(circle);
-        
-        const cardListId = 'list-points-circle';
-        _renderOnScreen(cardListId, circle);
 
+        DATABASE.saveShape(circle);
+
+        const cardListId = 'list-points-circle';
+
+        screen.renderShape(circle);
+        screen.addCardTo(cardListId, circle);
         _setDeleteButton(circle.id);
         _refillSelects();
     });
@@ -129,7 +120,8 @@ function enableEvents() {
         DATABASE.saveShape(curve);
 
         const cardListId = 'list-points-curve';
-        _renderOnScreen(cardListId, curve);
+        screen.renderShape(curve);
+        screen.addCardTo(cardListId, curve);
         _setDeleteButton(curve.id);
         _refillSelects();
     });
@@ -148,7 +140,7 @@ function enableEvents() {
 
         let shape = DATABASE.getShapeById(shapeId);
 
-        transformation.translate(shape, translateOnX, translateOnY);
+        shape.translate(translateOnX, translateOnY);
         DATABASE.updateShape(shape);
         screen.buildCanvas();
 
@@ -162,9 +154,9 @@ function enableEvents() {
 
         let shape = DATABASE.getShapeById(shapeId);
         if (typeof shape != 'Circle') {
-            shape.scale(scaleXFactor, scaleYFactor); 
+            shape.scale(scaleXFactor, scaleYFactor);
         } else {
-            shape.scale(scaleXFactor); 
+            shape.scale(scaleXFactor);
         }
 
         DATABASE.updateShape(shape);
@@ -191,13 +183,10 @@ function enableEvents() {
             pivot = { x, y };
         }
 
-        // APPLY ROTATION
-        transformation.translate(shape, -pivot.x, -pivot.y);
-        transformation.rotation(shape, angle);
-        transformation.translate(shape, pivot.x, pivot.y);
+        shape.rotation(angle, pivot);
 
-        // UPDATE SHAPE VERTICES
         DATABASE.updateShape(shape);
+
         screen.buildCanvas();
 
     });
@@ -248,11 +237,7 @@ function enableEvents() {
     }
 }
 
-const _renderOnScreen = (cardListId, shape) => {
-    screen.renderShape(shape);
-    screen.addCardTo(cardListId, shape);
-}
-
+// CREATES A BUTTON FOR A JUST CREATED LIST OF CARDS
 const _setDeleteButton = shapeId => {
     document.getElementById(`btn-${shapeId}`).addEventListener('click', () => {
         screen.removePointCardList(shapeId);
@@ -260,6 +245,7 @@ const _setDeleteButton = shapeId => {
     });
 }
 
+// FILL THE SELECTS OF SHAPES CONTROLLERS 
 const _refillSelects = () => {
     /* 
         AFTER DELETE OR ADD A SHAPE, 

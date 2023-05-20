@@ -35,31 +35,29 @@ export default class Shape {
         for (let i = 0; i < this.points.length; i++) {
             let x = this.points[i].x;
             let y = this.points[i].y;
-            
+
             let nx = x * cosOf(rotation) - y * sinOf(rotation);
             let ny = x * sinOf(rotation) + y * cosOf(rotation);
-            
+
             this.points[i].x = nx;
             this.points[i].y = ny;
         }
         this.translate(pivot.x, pivot.y);
     }
 
-
-
     getCenter() {
-        let averageY = (this._getHeighestY() + this._getLowestY()) / 2;
-        let averageX = (this._getHeighestX() + this._getLowestX()) / 2;
+        let averageY = (this._max_Y() + this._min_Y()) / 2;
+        let averageX = (this._max_X() + this._min_X()) / 2;
 
         return { x: averageX, y: averageY };
     }
     getWidth() {
-        let width = this._getHeighestX() - this._getLowestX();
+        let width = this._max_X() - this._min_X();
         return width < 0 ? -width : width;
     }
 
     getHeight() {
-        let height = this._getHeighestY() - this._getLowestY();
+        let height = this._max_Y() - this._min_Y();
         return height < 0 ? -height : height;
     }
 
@@ -72,7 +70,8 @@ export default class Shape {
         return false;
     }
 
-    _getHeighestY() {
+    // PRIVATES
+    _max_Y = () => {
         let major = this.points[0].y;
         for (const point of this.points) {
             if (point.y > major) {
@@ -82,7 +81,7 @@ export default class Shape {
         return major == 0 ? 1 : major;
     }
 
-    _getLowestY() {
+    _min_Y = () => {
         let minimal = this.points[0].y;
         for (const point of this.points) {
             if (point.y < minimal) {
@@ -92,7 +91,7 @@ export default class Shape {
         return minimal == 0 ? 1 : minimal;
     }
 
-    _getHeighestX() {
+    _max_X = () => {
         let major = this.points[0].x;
         for (const point of this.points) {
             if (point.x > major) {
@@ -102,7 +101,7 @@ export default class Shape {
         return major;
     }
 
-    _getLowestX() {
+    _min_X = () => {
         let minimal = this.points[0].x;
         for (const point of this.points) {
             if (point.x < minimal) {
