@@ -57,6 +57,11 @@ export default class Circle extends Shape {
         this.cy = y;
     }
 
-    rotation() {}
+    rotation(angle, pivot) {
+        super.rotation(angle, pivot);
+        let newCenter = this.getCenter();
+        this.cx = newCenter.x;
+        this.cy = newCenter.y;
+    }
 
 }
