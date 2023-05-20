@@ -143,7 +143,6 @@ function enableEvents() {
         shape.translate(translateOnX, translateOnY);
         DATABASE.updateShape(shape);
         screen.buildCanvas();
-
     });
 
     // APPLY SCALE
@@ -153,19 +152,19 @@ function enableEvents() {
         let scaleY = Number(document.getElementById('scale-factor-y').value);
 
         let shape = DATABASE.getShapeById(shapeId);
-        if (typeof shape != 'Circle') {
+       
+        if (!(shape instanceof Circle)) {
             shape.scale(scaleX, scaleY);
-        } else if (scaleX != 1) {
-            let factor = scaleX;
-            shape.scale(factor);
         } else {
-            let factor = scaleY;
-            shape.scale(factor);
+            if (scaleX != 1) {
+                shape.scale(scaleX);
+            } else {
+                shape.scale(scaleY);
+            }
         }
 
         DATABASE.updateShape(shape);
         screen.buildCanvas();
-
     });
 
     // APPLY ROTATION
