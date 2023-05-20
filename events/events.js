@@ -11,6 +11,7 @@ import { MAX_X, MAX_Y, CANVAS_HEIGHT, CANVAS_WIDTH } from "../utils/env.js";
 import Polyline from "../models/Polyline.js";
 import Line from "../models/Line.js";
 import Circle from "../models/Circle.js";
+import Curve from "../models/Curve.js";
 // import fill from "../algorithms/fill.js";
 
 function enableEvents() {
@@ -112,11 +113,12 @@ function enableEvents() {
 
         };
 
-        let interpolations = buildCurve(p0, pc, p1, smoothness);
-
-        let points = _multipleBresenham(interpolations);
-
-        let curve = new Shape(points);
+        /*   let interpolations = buildCurve(p0, pc, p1, smoothness);
+  
+          let points = _multipleBresenham(interpolations);
+  
+          let curve = new Shape(points); */
+        let curve = new Curve(p0, pc, p1, smoothness);
         DATABASE.saveShape(curve);
 
         const cardListId = 'list-points-curve';
@@ -152,7 +154,7 @@ function enableEvents() {
         let scaleY = Number(document.getElementById('scale-factor-y').value);
 
         let shape = DATABASE.getShapeById(shapeId);
-       
+
         if (!(shape instanceof Circle)) {
             shape.scale(scaleX, scaleY);
         } else {
