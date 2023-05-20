@@ -1,3 +1,4 @@
+import Bresenham from "../algorithms/bresenham.js";
 import OrderedPair from "./OrderedPair.js";
 import Shape from "./Shape.js"
 
@@ -20,7 +21,7 @@ export default class Curve extends Shape {
             let p = this.linearInterpolation(int.p01, int.p12, t);
             this.points.push(p);
         }
-        return this.points;
+        return this.conectInterpolations(this.points);
     }
 
     linearInterpolation(p1, p2, t) {
@@ -35,6 +36,17 @@ export default class Curve extends Shape {
             p01: this.linearInterpolation(p0, p1, t),
             p12: this.linearInterpolation(p1, p2, t),
         }
+    }
+
+    conectInterpolations = segments => {
+        let bresenham = new Bresenham();
+        let points = [];
+        for (let i = 1; i < segments.length; i++) {
+            let line = bresenham.buildLine(segments[i - 1], segments[i]);
+            points = points.concat(line);
+        }
+    
+        return points;
     }
 
 
