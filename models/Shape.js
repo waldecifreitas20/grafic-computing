@@ -3,9 +3,9 @@
 import { generateRamdomId } from "../utils/utils.js";
 
 export default class Shape {
-    constructor(vertices) {
+    constructor(points) {
         this.id = generateRamdomId();
-        this.vertices = vertices;
+        this.points = points;
 
     }
 
@@ -15,34 +15,34 @@ export default class Shape {
 
 
     translate(x = 0, y = 0) {
-        for (let i = 0; i < this.vertices.length; i++) {
-            this.vertices[i].x += x;
-            this.vertices[i].y += y;
+        for (let i = 0; i < this.points.length; i++) {
+            this.points[i].x += x;
+            this.points[i].y += y;
         }
     }
 
     scale(factorX, factorY) {
         let center = this.getCenter();
         this.translate(-center.x, -center.y);
-        for (let i = 0; i < this.vertices.length; i++) {
-            let x = this.vertices[i].x;
-            let y = this.vertices[i].y;
-            this.vertices[i].x = Math.round(factorX * x);
-            this.vertices[i].y = Math.round(factorY * y);
+        for (let i = 0; i < this.points.length; i++) {
+            let x = this.points[i].x;
+            let y = this.points[i].y;
+            this.points[i].x = Math.round(factorX * x);
+            this.points[i].y = Math.round(factorY * y);
         }
         this.translate(center.x, center.y);
     }
 
     rotation(rotation, pivot) {
-        for (let i = 0; i < this.vertices.length; i++) {
-            let x = this.vertices[i].x;
-            let y = this.vertices[i].y;
+        for (let i = 0; i < this.points.length; i++) {
+            let x = this.points[i].x;
+            let y = this.points[i].y;
 
             let nx = x * cosOf(rotation) - y * sinOf(rotation);
             let ny = x * sinOf(rotation) + y * cosOf(rotation);
 
-            this.vertices[i].x = Math.floor(nx);
-            this.vertices[i].y = Math.floor(ny);
+            this.points[i].x = Math.floor(nx);
+            this.points[i].y = Math.floor(ny);
         }
     }
 
@@ -65,7 +65,7 @@ export default class Shape {
     }
 
     hasPoint(x, y) {
-        for (const point of this.vertices) {
+        for (const point of this.points) {
             if (x == point.x && y == point.y) {
                 return true;
             }
@@ -74,8 +74,8 @@ export default class Shape {
     }
 
     _getHeighestY() {
-        let major = this.vertices[0].y;
-        for (const point of this.vertices) {
+        let major = this.points[0].y;
+        for (const point of this.points) {
             if (point.y > major) {
                 major = point.y;
             }
@@ -84,8 +84,8 @@ export default class Shape {
     }
 
     _getLowestY() {
-        let minimal = this.vertices[0].y;
-        for (const point of this.vertices) {
+        let minimal = this.points[0].y;
+        for (const point of this.points) {
             if (point.y < minimal) {
                 minimal = point.y;
             }
@@ -94,8 +94,8 @@ export default class Shape {
     }
 
     _getHeighestX() {
-        let major = this.vertices[0].x;
-        for (const point of this.vertices) {
+        let major = this.points[0].x;
+        for (const point of this.points) {
             if (point.x > major) {
                 major = point.x;
             }
@@ -104,8 +104,8 @@ export default class Shape {
     }
 
     _getLowestX() {
-        let minimal = this.vertices[0].x;
-        for (const point of this.vertices) {
+        let minimal = this.points[0].x;
+        for (const point of this.points) {
             if (point.x < minimal) {
                 minimal = point.x;
             }

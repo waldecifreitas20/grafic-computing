@@ -90,14 +90,14 @@ function enableEvents() {
         const y = Number(document.getElementById('circle-y-axis-input').value);
         const x = Number(document.getElementById('circle-x-axis-input').value);
 
-        let circle = new Circle(radius);
-        transformation.translate(circle, x, y);
+        let circle = new Circle(radius, x, y);
+      //  transformation.translate(circle, x, y);
         
         DATABASE.saveShape(circle);
         
         const cardListId = 'list-points-circle';
         _renderOnScreen(cardListId, circle);
-        console.log(circle.id);
+
         _setDeleteButton(circle.id);
         _refillSelects();
     });
