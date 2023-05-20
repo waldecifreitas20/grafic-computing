@@ -58,10 +58,10 @@ export default class Bresenham {
     }
 
     buildLine(origin, destiny) {
-        let x1 = origin.x;
-        let x2 = destiny.x;
-        let y1 = origin.y;
-        let y2 = destiny.y;
+        let x1 = Math.round(origin.x);
+        let x2 = Math.round(destiny.x);
+        let y1 = Math.round(origin.y);
+        let y2 = Math.round(destiny.y);
         let axis = this._reflect(x1, x2, y1, y2);
 
         x1 = axis['x1'];

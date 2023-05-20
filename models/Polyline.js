@@ -2,24 +2,25 @@ import Shape from "./Shape.js";
 import Bresenham from "../algorithms/bresenham.js";
 
 export default class Polyline extends Shape {
-    constructor(vertices) {
-        super(vertices);
+    constructor(points) {
+        super(points);
     }
 
     rasterize() {
         let bresenham = new Bresenham();
-        let points = [];
-        for (let i = 1; i <= this.vertices.length; i++) {
+        let lineBody = [];
+ 
+        for (let i = 1; i <= this.points.length; i++) {
             let line;
-            if (i == this.vertices.length) {
-                line = bresenham.buildLine(this.vertices[i-1], this.vertices[0]);
-                points = points.concat(line);
-            }else if(this.vertices.length > 2){
-                line = bresenham.buildLine(this.vertices[i - 1], this.vertices[i]);
-                points = points.concat(line);
+            if (i == this.points.length) {
+                line = bresenham.buildLine(this.points[i - 1], this.points[0]);
+                lineBody = lineBody.concat(line);
+            } else if (this.points.length > 2) {
+                line = bresenham.buildLine(this.points[i - 1], this.points[i]);
+                lineBody = lineBody.concat(line);
             }
         }
-
-        return points;
+   
+        return lineBody;
     }
 }

@@ -1,12 +1,9 @@
-'use strict';
-
-import { generateRamdomId } from "../utils/utils.js";
+import { cosOf, generateRamdomId, sinOf } from "../utils/utils.js";
 
 export default class Shape {
     constructor(points) {
         this.id = generateRamdomId();
         this.points = points;
-
     }
 
     rasterize() {
@@ -34,16 +31,18 @@ export default class Shape {
     }
 
     rotation(rotation, pivot) {
+        this.translate(-pivot.x, -pivot.y);
         for (let i = 0; i < this.points.length; i++) {
             let x = this.points[i].x;
             let y = this.points[i].y;
-
+            
             let nx = x * cosOf(rotation) - y * sinOf(rotation);
             let ny = x * sinOf(rotation) + y * cosOf(rotation);
-
-            this.points[i].x = Math.floor(nx);
-            this.points[i].y = Math.floor(ny);
+            
+            this.points[i].x = nx;
+            this.points[i].y = ny;
         }
+        this.translate(pivot.x, pivot.y);
     }
 
 
@@ -52,7 +51,7 @@ export default class Shape {
         let averageY = (this._getHeighestY() + this._getLowestY()) / 2;
         let averageX = (this._getHeighestX() + this._getLowestX()) / 2;
 
-        return { x: Math.round(averageX), y: Math.round(averageY) };
+        return { x: averageX, y: averageY };
     }
     getWidth() {
         let width = this._getHeighestX() - this._getLowestX();
