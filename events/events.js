@@ -149,14 +149,18 @@ function enableEvents() {
     // APPLY SCALE
     document.getElementById('btn-scale').addEventListener('click', () => {
         let shapeId = document.getElementById('scale-select').value;
-        let scaleXFactor = Number(document.getElementById('scale-factor-x').value);
-        let scaleYFactor = Number(document.getElementById('scale-factor-y').value);
+        let scaleX = Number(document.getElementById('scale-factor-x').value);
+        let scaleY = Number(document.getElementById('scale-factor-y').value);
 
         let shape = DATABASE.getShapeById(shapeId);
         if (typeof shape != 'Circle') {
-            shape.scale(scaleXFactor, scaleYFactor);
+            shape.scale(scaleX, scaleY);
+        } else if (scaleX != 1) {
+            let factor = scaleX;
+            shape.scale(factor);
         } else {
-            shape.scale(scaleXFactor);
+            let factor = scaleY;
+            shape.scale(factor);
         }
 
         DATABASE.updateShape(shape);

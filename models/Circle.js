@@ -1,4 +1,3 @@
-import transformation from "../algorithms/transformation.js";
 import OrderedPair from "./OrderedPair.js";
 import Shape from "./Shape.js"
 
@@ -58,8 +57,6 @@ export default class Circle extends Shape {
         this.cy = y;
     }
 
-
-
-
+    rotation() {}
 
 }
