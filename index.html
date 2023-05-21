@@ -132,8 +132,14 @@
                 <section id="fill-section">
                     <h3>Preenchimento</h3>
                     <p hidden id="fill-info">Clique em algum lugar do canvas para preencher</p>
-                    <label for="fill-select">Id da Forma:</label>
-                    <select class="shape-control-select" id="fill-select"></select>
+                    <label for="fill-select">Cor de Preenchimento</label>
+                    <select id="fill-select">
+                        <option value="black">Preto</option>
+                        <option value="blue">Azul</option>
+                        <option value="lightblue">Azul Claro</option>
+                        <option value="red">Vermelho</option>
+                        <option value="green">Verde</option>
+                    </select>
                     <input type="button" id="btn-fill-scanned" class="btn-fill" value="Preencher por Varredura">
                     <input type="button" id="btn-fill-recursive" class="btn-fill" value="Preenchimento Recursivo">
                 </section>

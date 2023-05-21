@@ -8,6 +8,8 @@ import Polyline from "../models/Polyline.js";
 import Line from "../models/Line.js";
 import Circle from "../models/Circle.js";
 import Curve from "../models/Curve.js";
+import fill from "../algorithms/fill.js";
+import FilledShape from "../models/FilledShape.js";
 // import fill from "../algorithms/fill.js";
 
 function enableEvents() {
@@ -23,8 +25,8 @@ function enableEvents() {
         // ORDEREDS PAIRS
         let origin = new OrderedPair(x1, y1);
         let destiny = new OrderedPair(x2, y2,);
-
         let line = new Line(origin, destiny);
+        console.log(line);
 
         DATABASE.saveShape(line);
 
@@ -200,39 +202,40 @@ function enableEvents() {
         _toggleHtmlHiding(() => type != 'random', tagId);
     });
 
+    let enableFill = false;
     // FILL
     document.getElementById("screen").addEventListener('click', evt => {
-        const ERR_X = 1.0111; // ERROR RATE AT X AXIS
-        const ERR_Y = 1.0161; // ERROR RATE AT Y AXIS
+        if (enableFill) {
+            const ERR_X = 1.0111; // ERROR RATE AT X AXIS
+            const ERR_Y = 1.0161; // ERROR RATE AT Y AXIS
 
-        // CALCULE VIRTUAL POSITION ON CANVAS
-        const PIXEL_WIDTH = CANVAS_WIDTH / MAX_X;
-        const canvasPositionAtX = evt.offsetX;
-        const x = canvasPositionAtX * ERR_X / PIXEL_WIDTH;
+            // CALCULE VIRTUAL POSITION ON CANVAS
+            const PIXEL_WIDTH = CANVAS_WIDTH / MAX_X;
+            const canvasPositionAtX = evt.offsetX;
+            const x = canvasPositionAtX * ERR_X / PIXEL_WIDTH;
 
-        const PIXEL_HEIGHT = CANVAS_HEIGHT / MAX_Y;
-        const canvasPositionAtY = evt.offsetY;
+            const PIXEL_HEIGHT = CANVAS_HEIGHT / MAX_Y;
+            const canvasPositionAtY = evt.offsetY;
+            const y = canvasPositionAtY * ERR_Y / PIXEL_HEIGHT;
 
-        const y = canvasPositionAtY * ERR_Y / PIXEL_HEIGHT;
+            let startPoint = new OrderedPair(x - MAX_X / 2, MAX_Y / 2 - y);
 
+            let points = fill.byScan(startPoint.x, startPoint.y);
+            let shapeColor = document.getElementById('fill-select').value
+            let shape = new FilledShape(points, shapeColor);
+            screen.renderShape(shape);
+            DATABASE.saveShape(shape);
 
-        /* const shapeId = document.getElementById('fill-select').value;
-        let shape = DATABASE.getShapeById(shapeId); */
-
-        let startPoint = new OrderedPair(x - MAX_X / 2, MAX_Y / 2 - y);
-
-        /*  screen.renderShape(shape);
-         DATABASE.saveShape(shape); */
-        /* let fillInfo = document.getElementById('fill-info');
-        fillInfo.setAttribute('class', 'hidden'); */
-
-        _toggleHtmlHiding(() => true, 'fill-info');
+            enableFill = false;
+            _toggleHtmlHiding(() => true, 'fill-info');
+        }
     });
 
     // ENABLE FILLING
     for (let i = 0; i < 2; i++) {
         document.getElementsByClassName('btn-fill')[i]
             .addEventListener('click', () => {
+                enableFill = true;
                 _toggleHtmlHiding(() => false, 'fill-info');
             });
     }
