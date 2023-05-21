@@ -1,10 +1,11 @@
 import Bresenham from "../algorithms/bresenham.js";
+import { cosOf, sinOf } from "../utils/utils.js";
 import OrderedPair from "./OrderedPair.js";
 import Shape from "./Shape.js"
 
 export default class Curve extends Shape {
     constructor(p0, p1, p2, smoothness) {
-        super();
+        super([]);
         this.p0 = p0;
         this.p1 = p1;
         this.p2 = p2;
@@ -45,9 +46,50 @@ export default class Curve extends Shape {
             let line = bresenham.buildLine(segments[i - 1], segments[i]);
             points = points.concat(line);
         }
-    
+
         return points;
     }
 
+    translate(x, y) {
+        this.p0.x += x;
+        this.p0.y += y;
+
+        this.p1.x += x;
+        this.p1.y += y;
+
+        this.p2.x += x;
+        this.p2.y += y;
+    }
+
+    scale(xFactor, yFactor) {
+        let center = this.getCenter();
+
+        this.translate(-center.x, -center.y);
+
+        this.p0.x *= xFactor;
+        this.p0.y *= yFactor;
+
+        this.p1.x *= xFactor;
+        this.p1.y *= yFactor;
+
+        this.p2.x *= xFactor;
+        this.p2.y *= yFactor;
+
+        this.translate(center.x, center.y);
+    }
+
+    rotation(angle, pivot) {
+        this.translate(-pivot.x, -pivot.y);
+
+        this.p0.x = Math.round(this.p0.x * cosOf(angle) - this.p0.y * sinOf(angle));
+        this.p0.y = Math.round(this.p0.x * sinOf(angle) + this.p0.y * cosOf(angle));
+        this.p1.x = Math.round(this.p1.x * cosOf(angle) - this.p1.y * sinOf(angle));
+        this.p1.y = Math.round(this.p1.x * sinOf(angle) + this.p1.y * cosOf(angle));
+         
+        this.p2.x = Math.round(this.p2.x * cosOf(angle) - this.p2.y * sinOf(angle));
+        this.p2.y = Math.round(this.p2.x * sinOf(angle) + this.p2.y * cosOf(angle));
+
+        this.translate(pivot.x, pivot.y);
+    }
 
 }

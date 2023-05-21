@@ -1,12 +1,8 @@
 import Bresenham from "../algorithms/bresenham.js";
-import Shape from "../models/Shape.js"
 import screen from "../algorithms/screen.js";
-import { buildCircle } from "../algorithms/circle.js";
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from '../data/data.js';
-import transformation from '../algorithms/transformation.js';
 import { generateRamdomId } from "../utils/utils.js";
-import buildCurve from "../algorithms/curve.js";
 import { MAX_X, MAX_Y, CANVAS_HEIGHT, CANVAS_WIDTH } from "../utils/env.js";
 import Polyline from "../models/Polyline.js";
 import Line from "../models/Line.js";
