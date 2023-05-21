@@ -265,17 +265,6 @@ const _refillSelects = () => {
     }
 }
 
-const _multipleBresenham = segments => {
-    let bresenham = new Bresenham();
-    let points = [];
-    for (let i = 1; i < segments.length; i++) {
-        let line = bresenham.buildLine(segments[i - 1], segments[i]);
-        points = points.concat(line);
-    }
-
-    return points;
-}
-
 const _toggleHtmlHiding = (ishiding, tagId) => {
     const htmlTag = document.getElementById(tagId);
     if (ishiding()) {
