@@ -16,12 +16,11 @@ export default class Circle extends Shape {
         let e = -this.radius;
         this.points = [];
 
-
         this.points.push(new OrderedPair(x, y))
         this.points.push(new OrderedPair(y, x,))
         this.points.push(new OrderedPair(-y, -x))
         this.points.push(new OrderedPair(-x, -y))
-        
+
         while (x <= y) {
             e += 2 * x + 1;
             x++;
@@ -40,7 +39,6 @@ export default class Circle extends Shape {
             this.points.push(new OrderedPair(x, -y))//7o. oct
             this.points.push(new OrderedPair(y, -x))//8o. oct
         }
-
         this.translate(this.cx, this.cy);
         return this.points;
     }
@@ -50,11 +48,12 @@ export default class Circle extends Shape {
             this.radius *= factor;
         }
     }
-    
+
     translate(x, y) {
-        super.translate(x,y);
-        this.cx = x;
-        this.cy = y;
+        super.translate(x, y);
+        let center = this.getCenter();
+        this.cx = center.x;
+        this.cy = center.y;
     }
 
     rotation(angle, pivot) {
