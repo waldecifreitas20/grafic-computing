@@ -1,7 +1,9 @@
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from "../data/data.js";
 import Shape from "../models/Shape.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, MAX_X, MAX_Y } from "../utils/env.js";
+import Polyline from "../models/Polyline.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, MAX_X, MAX_Y, SCREEN_WIDTH } from "../utils/env.js";
+import colors from "../utils/colors.js";
 
 
 const PIXEL_SIZE = 10;
@@ -20,10 +22,24 @@ function buildCanvas() {
         }
     }
 
+    buildScreen();
     // _setCenterAim('red');
     for (let shape of DATABASE.shapes) {
         renderShape(shape);
     }
+
+}
+
+function buildScreen(params) {
+    let dimensions = [
+        new OrderedPair(-SCREEN_WIDTH / 2, SCREEN_WIDTH / 2),
+        new OrderedPair(-SCREEN_WIDTH / 2, -SCREEN_WIDTH / 2),
+        new OrderedPair(SCREEN_WIDTH / 2, -SCREEN_WIDTH / 2),
+        new OrderedPair(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2),
+    ];
+
+    let screen = new Polyline(dimensions, colors.RED);
+    DATABASE.saveShape(screen);    
 
 }
 
@@ -62,7 +78,7 @@ function addCardTo(listId, shape) {
     html += `<p class="shape-id"><strong>Id:</strong> ${shape.id}`;
     html += `<button id="btn-${shape.id}">Excluir Desenho</button></p>`;  // delete's button
     html += `<div class="divider"></div>`;
-    
+
     /* let points = shape.rasterize();
     for (let i = 0; i < shape.points.length; i++) {
         html += `p${i + 1}(${shape.points[i].x}, ${shape.points[i].y}); `;
