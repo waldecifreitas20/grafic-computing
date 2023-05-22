@@ -6,13 +6,12 @@ enableEvents();
 // BUILD THE GRID ON START APLICATION
 screen.buildCanvas();
 
-let fillSelect = document.getElementById('fill-select');
 
+let fillSelect = document.getElementById('fill-select');
+// FILL SELECT WITH OPTIONS OF COLOR
 fillSelect.innerHTML = '';
 for (const color of Colors.ALL) {
-    fillSelect.innerHTML += `
-    <option value="${color}">${color}</option>
-    `;
+    fillSelect.innerHTML += `<option value="${color}">${color}</option>`;
 }
 
 
