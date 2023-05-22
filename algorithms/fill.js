@@ -1,12 +1,8 @@
-import DATABASE from "../data/data.js";
 import { MAX_X, MAX_Y } from "../utils/env.js";
+import screen from "../algorithms/screen.js"
+import DATABASE from "../data/data.js";
 
 
-/* 
-    THIS FUNCTION NEEDS TO KNOW WHERE ARE ALL THE POINTS
-    WHICH ARE BEING RENDERED. A TIP IS CREATE A MATRIX IN
-    SCREEN.JS, AND MAKE THIS FUNCIOTN ACCESS IT.
-*/
 function byScan(x, y, alreadyFilled = []) {
     const isNotFilled = !DATABASE.hasPoint(x, y) && !isOnStack(x, y, alreadyFilled);
     const fitWidth = x <= MAX_X / 2 && x >= -MAX_X / 2;
@@ -14,7 +10,7 @@ function byScan(x, y, alreadyFilled = []) {
 
     if (isNotFilled && fitHeight && fitWidth) {
         alreadyFilled.push({ x, y });
-        
+
         alreadyFilled = byScan(x - 1, y, alreadyFilled);
         alreadyFilled = byScan(x + 1, y, alreadyFilled);
         alreadyFilled = byScan(x, y + 1, alreadyFilled);

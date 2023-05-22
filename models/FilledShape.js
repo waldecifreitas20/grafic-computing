@@ -1,8 +1,9 @@
+import Colors from "../utils/colors.js";
 import OrderedPair from "./OrderedPair.js";
 import Shape from "./Shape.js";
 
 export default class FilledShape extends Shape {
-    constructor(points, color='green') {
+    constructor(points, color = Colors.LIGHTGRAY) {
         super();
         this.points = points;
         console.log(points);
@@ -15,7 +16,6 @@ export default class FilledShape extends Shape {
         }
     }
     rasterize() {
-        
         return this.points;
     }
 }

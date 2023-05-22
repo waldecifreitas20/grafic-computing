@@ -223,11 +223,18 @@ function enableEvents() {
             let points = fill.byScan(startPoint.x, startPoint.y);
             let shapeColor = document.getElementById('fill-select').value
             let shape = new FilledShape(points, shapeColor);
+            
             screen.renderShape(shape);
             DATABASE.saveShape(shape);
+            
+            const cardListId = 'list-points-fill';
+            screen.addCardTo(cardListId, shape);
+            _setDeleteButton(shape.id);
+            _refillSelects();
 
             enableFill = false;
             _toggleHtmlHiding(() => true, 'fill-info');
+
         }
     });
 

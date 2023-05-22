@@ -1,3 +1,4 @@
+import colors from "../utils/colors.js";
 import { cosOf, generateRamdomId, sinOf } from "../utils/utils.js";
 
 export default class Shape {
@@ -62,8 +63,9 @@ export default class Shape {
     }
 
     hasPoint(x, y) {
-        for (const point of this.points) {
-            if (x == point.x && y == point.y) {
+        let points = this.rasterize();
+        for (const point of points) {
+            if (x == point.x && y == point.y && point.color == colors.BORDER) {
                 return true;
             }
         }
