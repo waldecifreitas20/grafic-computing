@@ -2,12 +2,13 @@ import Shape from "./Shape.js";
 import Bresenham from "../algorithms/bresenham.js";
 
 export default class Polyline extends Shape {
-    constructor(points) {
+    constructor(points, color) {
         super(points);
+        this.color = color;
     }
 
     rasterize() {
-        let bresenham = new Bresenham();
+        let bresenham = new Bresenham(1000, this.color);
         let lineBody = [];
  
         for (let i = 1; i <= this.points.length; i++) {

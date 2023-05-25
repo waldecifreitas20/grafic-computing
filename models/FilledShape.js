@@ -6,7 +6,6 @@ export default class FilledShape extends Shape {
     constructor(points, color = Colors.LIGHTGRAY) {
         super();
         this.points = points;
-        console.log(points);
         this.color = color;
         this._convertToOrderedPair();
     }

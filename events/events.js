@@ -248,10 +248,11 @@ function enableEvents() {
     }
 }
 
-// CREATES A BUTTON FOR A JUST CREATED LIST OF CARDS
+// CREATES A DELETE BUTTON FOR A JUST CREATED LIST OF CARDS
 const _setDeleteButton = shapeId => {
     document.getElementById(`btn-${shapeId}`).addEventListener('click', () => {
         screen.removePointCardList(shapeId);
+        console.log('ASD');
         _refillSelects();
     });
 }

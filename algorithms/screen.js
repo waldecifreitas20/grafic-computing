@@ -23,14 +23,14 @@ function buildCanvas() {
     }
 
     buildScreen();
-    // _setCenterAim('red');
+    
     for (let shape of DATABASE.shapes) {
         renderShape(shape);
     }
 
 }
 
-function buildScreen(params) {
+function buildScreen() {
     let dimensions = [
         new OrderedPair(-SCREEN_WIDTH / 2, SCREEN_WIDTH / 2),
         new OrderedPair(-SCREEN_WIDTH / 2, -SCREEN_WIDTH / 2),
@@ -39,8 +39,7 @@ function buildScreen(params) {
     ];
 
     let screen = new Polyline(dimensions, colors.RED);
-    DATABASE.saveShape(screen);    
-
+    renderShape(screen);  
 }
 
 function clearCanvas() {

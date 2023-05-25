@@ -1,9 +1,10 @@
 import { createMatrix } from "../utils/utils.js";
 import OrderedPair from "../models/OrderedPair.js";
+import colors from "../utils/colors.js";
 
 export default class Bresenham {
 
-    constructor(matrixLength) {
+    constructor(matrixLength, color=colors.BORDER) {
         this.matrixLength = matrixLength;
         this.matrix = createMatrix(matrixLength, '- ');
         this._changeX = false;
@@ -12,6 +13,7 @@ export default class Bresenham {
         this.DRAWN_POINT = '1  ';
         this.EMPTY_POINT = '-  ';
         this.pointsLocation = [];
+        this.color = color;
         this._reflectedPointsLocation = [];
     }
 
@@ -37,13 +39,6 @@ export default class Bresenham {
         }
 
         if (y1 > y2) {
-            // CAN BE A BUG
-           /*  if (y2 < 0) {
-                y2 *= -1;
-            }
-            if (y1 < 0) {
-                y1 *= -1;
-            } */
             y1 = this.matrix.length - 1 - y1;
             y2 = this.matrix.length - 1 - y2;
             this._changeY = true;
@@ -119,7 +114,7 @@ export default class Bresenham {
             }
             
             
-            this.pointsLocation.push(new OrderedPair(x, y));
+            this.pointsLocation.push(new OrderedPair(x, y, this.color));
         }
 
         // Reset Variables
