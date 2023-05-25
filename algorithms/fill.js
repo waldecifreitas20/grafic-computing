@@ -1,5 +1,4 @@
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../utils/env.js";
-import screen from "../algorithms/screen.js"
 import DATABASE from "../data/data.js";
 
 
