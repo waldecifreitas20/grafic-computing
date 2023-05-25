@@ -1,12 +1,12 @@
-import { MAX_X, MAX_Y } from "../utils/env.js";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../utils/env.js";
 import screen from "../algorithms/screen.js"
 import DATABASE from "../data/data.js";
 
 
 function byScan(x, y, alreadyFilled = []) {
     const isNotFilled = !DATABASE.hasPoint(x, y) && !isOnStack(x, y, alreadyFilled);
-    const fitWidth = x <= MAX_X / 2 && x >= -MAX_X / 2;
-    const fitHeight = y <= MAX_Y / 2 && y >= -MAX_Y / 2;
+    const fitWidth = x < SCREEN_WIDTH / 2 && x > -SCREEN_WIDTH / 2;
+    const fitHeight = y < SCREEN_HEIGHT / 2 && y > -SCREEN_HEIGHT / 2;
 
     if (isNotFilled && fitHeight && fitWidth) {
         alreadyFilled.push({ x, y });
