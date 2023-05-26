@@ -2,7 +2,7 @@ import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from "../data/data.js";
 import Shape from "../models/Shape.js";
 import Polyline from "../models/Polyline.js";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, MAX_X, MAX_Y, SCREEN_WIDTH } from "../utils/env.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, MAX_X, MAX_Y, SCREEN_HEIGHT, SCREEN_WIDTH } from "../utils/env.js";
 import colors from "../utils/colors.js";
 
 
@@ -23,7 +23,7 @@ function buildCanvas() {
     }
 
     buildScreen();
-    
+
     for (let shape of DATABASE.shapes) {
         renderShape(shape);
     }
@@ -39,7 +39,10 @@ function buildScreen() {
     ];
 
     let screen = new Polyline(dimensions, colors.RED);
-    renderShape(screen);  
+    let points = screen.rasterize();
+    for (const point of points) {
+        _renderPoint(point, true);
+    }
 }
 
 function clearCanvas() {
@@ -55,13 +58,23 @@ function renderShape(shape) {
     }
 }
 
-function _renderPoint(orderedPoint) {
+function _renderPoint(orderedPoint, forceRender=false) {
     let x = (MAX_X / 2 + Math.round(orderedPoint.x)) * PIXEL_SIZE * THICKNESS;
     let y = (MAX_Y / 2 - Math.round(orderedPoint.y)) * PIXEL_SIZE * THICKNESS;
-    let brush = canvas.getContext('2d');
 
-    brush.fillStyle = orderedPoint.color;
-    brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
+    if (isInside(orderedPoint.x, orderedPoint.y) || forceRender) {
+        let brush = canvas.getContext('2d');
+        brush.fillStyle = orderedPoint.color;
+        brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
+    }
+}
+
+function isInside(x, y) {
+    let fitsHeight = y < SCREEN_HEIGHT/2 && y > -SCREEN_HEIGHT/2;
+    let fitsWidth = x < SCREEN_WIDTH/2 && x > -SCREEN_WIDTH/2;
+    
+    console.log({x, y, fitsHeight, fitsWidth});
+    return fitsHeight && fitsWidth;
 }
 
 function addCardTo(listId, shape) {
