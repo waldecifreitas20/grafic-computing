@@ -1,6 +1,7 @@
 class AppData {
     constructor() {
         this.shapes = [];
+        this.points = [];
     }
 
     saveShape(shape) {
@@ -9,11 +10,20 @@ class AppData {
             return false;
         }
         this.shapes.push(shape);
+        this.points.push(...shape.rasterize());
+    }
+
+    updatePoints() {
+        let points = [];
+        for (const shape of this.shapes) {
+            points.push(...shape.rasterize());
+        }
+        this.points = points;
     }
 
     hasPoint(x, y) {
-        for (const shape of this.shapes) {
-            if (shape.hasPoint(x,y)) {
+        for (const point of this.points) {
+            if (point.x == x && point.y == y) {
                 return true;
             }
         }
@@ -34,12 +44,14 @@ class AppData {
         for (let i = 0; i < this.shapes.length; i++) {
             if (this.shapes[i].id == shapeId) {
                 this.shapes.splice(i, 1);
+                this.updatePoints();
             }
         }
     }
 
     clear() {
         this.shapes = [];
+        this.points = [];
     }
 
     getShapesId() {
@@ -49,7 +61,7 @@ class AppData {
         }
         return ids;
     }
-    
+
     getShapeById(id) {
         for (const shape of this.shapes) {
             if (id == shape.id) {
