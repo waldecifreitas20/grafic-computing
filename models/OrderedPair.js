@@ -6,7 +6,6 @@ export default class OrderedPair {
         this.y = Math.round(y);
         this.value = value;
         this.color = color;
-        this.isVertex = false
     }
 }
 
