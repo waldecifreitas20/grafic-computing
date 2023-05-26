@@ -73,7 +73,6 @@ function isInside(x, y) {
     let fitsHeight = y < SCREEN_HEIGHT/2 && y > -SCREEN_HEIGHT/2;
     let fitsWidth = x < SCREEN_WIDTH/2 && x > -SCREEN_WIDTH/2;
     
-    console.log({x, y, fitsHeight, fitsWidth});
     return fitsHeight && fitsWidth;
 }
 

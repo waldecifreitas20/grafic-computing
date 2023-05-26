@@ -1,5 +1,3 @@
-import { generateRamdomId } from '../utils/utils.js';
-
 class AppData {
     constructor() {
         this.shapes = [];

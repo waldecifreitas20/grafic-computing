@@ -1,4 +1,3 @@
-import Bresenham from "../algorithms/bresenham.js";
 import screen from "../algorithms/screen.js";
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from '../data/data.js';
@@ -10,7 +9,6 @@ import Circle from "../models/Circle.js";
 import Curve from "../models/Curve.js";
 import fill from "../algorithms/fill.js";
 import FilledShape from "../models/FilledShape.js";
-// import fill from "../algorithms/fill.js";
 
 function enableEvents() {
     // BUILD LINE
@@ -21,12 +19,10 @@ function enableEvents() {
         const y1 = Number.parseInt(document.getElementById('y1-axis-input').value);
         const y2 = Number.parseInt(document.getElementById('y2-axis-input').value);
 
-
         // ORDEREDS PAIRS
         let origin = new OrderedPair(x1, y1);
         let destiny = new OrderedPair(x2, y2,);
         let line = new Line(origin, destiny);
-        console.log(line);
 
         DATABASE.saveShape(line);
 
@@ -223,10 +219,10 @@ function enableEvents() {
             let points = fill.byScan(startPoint.x, startPoint.y);
             let shapeColor = document.getElementById('fill-select').value
             let shape = new FilledShape(points, shapeColor);
-            
+
             screen.renderShape(shape);
             DATABASE.saveShape(shape);
-            
+
             const cardListId = 'list-points-fill';
             screen.addCardTo(cardListId, shape);
             _setDeleteButton(shape.id);
@@ -239,20 +235,18 @@ function enableEvents() {
     });
 
     // ENABLE FILLING
-    for (let i = 0; i < 2; i++) {
-        document.getElementsByClassName('btn-fill')[i]
-            .addEventListener('click', () => {
-                enableFill = true;
-                _toggleHtmlHiding(() => false, 'fill-info');
-            });
-    }
+    document.getElementById('btn-fill').addEventListener('click', () => {
+        enableFill = true;
+        _toggleHtmlHiding(() => false, 'fill-info');
+    });
+
 }
 
 // CREATES A DELETE BUTTON FOR A JUST CREATED LIST OF CARDS
 const _setDeleteButton = shapeId => {
     document.getElementById(`btn-${shapeId}`).addEventListener('click', () => {
         screen.removePointCardList(shapeId);
-        console.log('ASD');
+
         _refillSelects();
     });
 }
