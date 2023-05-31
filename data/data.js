@@ -75,6 +75,7 @@ class AppData {
         for (let i = 0; i < this.shapes.length; i++) {
             if (shape.id == this.shapes[i].id) {
                 this.shapes[i] = shape;
+                this.updatePoints();
                 return true;
             }
         }
