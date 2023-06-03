@@ -127,10 +127,6 @@ function removeVertexInput(vertexId) {
 
 // PRIVATES
 
-function _setCenterAim(color) {
-    DATABASE.saveShape(new Shape([new OrderedPair(0, 0, color)]));
-}
-
 function _renderBackground(orderedPoint, color = 'black') {
     let x = orderedPoint.x * PIXEL_SIZE * THICKNESS;
     let y = orderedPoint.y * PIXEL_SIZE * THICKNESS;

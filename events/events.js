@@ -107,11 +107,6 @@ function enableEvents() {
 
         };
 
-        /*   let interpolations = buildCurve(p0, pc, p1, smoothness);
-  
-          let points = _multipleBresenham(interpolations);
-  
-          let curve = new Shape(points); */
         let curve = new Curve(p0, pc, p1, smoothness);
         DATABASE.saveShape(curve);
 

@@ -71,7 +71,7 @@ class AppData {
         return false;
     }
 
-    updateShape(shape) {
+    updateShape(shape) 
         for (let i = 0; i < this.shapes.length; i++) {
             if (shape.id == this.shapes[i].id) {
                 this.shapes[i] = shape;

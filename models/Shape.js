@@ -62,16 +62,6 @@ export default class Shape {
         return height < 0 ? -height : height;
     }
 
-    hasPoint(x, y) {
-        let points = this.rasterize();
-        for (const point of points) {
-            if (x == point.x && y == point.y && point.color == colors.BORDER) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     // PRIVATES
     _max_Y = () => {
         let major = this.points[0].y;

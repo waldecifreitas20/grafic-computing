@@ -10,8 +10,6 @@ export default class Bresenham {
         this._changeX = false;
         this._changeY = false;
         this._changeXY = false;
-        this.DRAWN_POINT = '1  ';
-        this.EMPTY_POINT = '-  ';
         this.pointsLocation = [];
         this.color = color;
         this._reflectedPointsLocation = [];
