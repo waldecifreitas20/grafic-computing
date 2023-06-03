@@ -1,15 +1,16 @@
 import OrderedPair from "../models/OrderedPair.js";
 import DATABASE from "../data/data.js";
+import Shape from "../models/Shape.js";
+import Polyline from "../models/Polyline.js";
+import { CANVAS_HEIGHT, CANVAS_WIDTH, MAX_X, MAX_Y, SCREEN_HEIGHT, SCREEN_WIDTH } from "../utils/env.js";
+import colors from "../utils/colors.js";
 
-const MAX_X = 84; // MAX QUANTITY OF PIXELS ALONG AXYS X
-const MAX_Y = 54; // MAX QUANTITY OF PIXELS ALONG AXYS X
+
 const PIXEL_SIZE = 10;
+const THICKNESS = 1.05;
 let canvas;
 
 function buildCanvas() {
-    const CANVAS_HEIGHT = 577;
-    const CANVAS_WIDTH = 892;
-
     canvas = document.querySelector('canvas');
 
     canvas.setAttribute('height', CANVAS_HEIGHT.toString());
@@ -21,10 +22,27 @@ function buildCanvas() {
         }
     }
 
+    buildScreen();
+
     for (let shape of DATABASE.shapes) {
         renderShape(shape);
     }
 
+}
+
+function buildScreen() {
+    let dimensions = [
+        new OrderedPair(-SCREEN_WIDTH / 2, SCREEN_WIDTH / 2),
+        new OrderedPair(-SCREEN_WIDTH / 2, -SCREEN_WIDTH / 2),
+        new OrderedPair(SCREEN_WIDTH / 2, -SCREEN_WIDTH / 2),
+        new OrderedPair(SCREEN_WIDTH / 2, SCREEN_WIDTH / 2),
+    ];
+
+    let screen = new Polyline(dimensions, colors.RED);
+    let points = screen.rasterize();
+    for (const point of points) {
+        _renderPoint(point, true);
+    }
 }
 
 function clearCanvas() {
@@ -34,9 +52,28 @@ function clearCanvas() {
 }
 
 function renderShape(shape) {
-    for (const point of shape.points) {
+    let points = shape.rasterize();
+    for (const point of points) {
         _renderPoint(point);
     }
+}
+
+function _renderPoint(orderedPoint, forceRender=false) {
+    let x = (MAX_X / 2 + Math.round(orderedPoint.x)) * PIXEL_SIZE * THICKNESS;
+    let y = (MAX_Y / 2 - Math.round(orderedPoint.y)) * PIXEL_SIZE * THICKNESS;
+
+    if (isInside(orderedPoint.x, orderedPoint.y) || forceRender) {
+        let brush = canvas.getContext('2d');
+        brush.fillStyle = orderedPoint.color;
+        brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
+    }
+}
+
+function isInside(x, y) {
+    let fitsHeight = y < SCREEN_HEIGHT/2 && y > -SCREEN_HEIGHT/2;
+    let fitsWidth = x < SCREEN_WIDTH/2 && x > -SCREEN_WIDTH/2;
+    
+    return fitsHeight && fitsWidth;
 }
 
 function addCardTo(listId, shape) {
@@ -53,9 +90,10 @@ function addCardTo(listId, shape) {
     html += `<button id="btn-${shape.id}">Excluir Desenho</button></p>`;  // delete's button
     html += `<div class="divider"></div>`;
 
+    /* let points = shape.rasterize();
     for (let i = 0; i < shape.points.length; i++) {
         html += `p${i + 1}(${shape.points[i].x}, ${shape.points[i].y}); `;
-    }
+    } */
     html += '</div>';
 
     card.innerHTML = html;
@@ -67,40 +105,31 @@ function removePointCardList(shapeId) {
     let card = document.getElementById(`card-${shapeId}`);
     card.remove();
     buildCanvas();
-    console.log(DATABASE.getShapesId());
 }
 
-function addEdgeInput(edgeId) {
-    let edgesBlock = document.getElementById('edges-block');
+function addVertexInput(vertexId) {
+    let vertexsBlock = document.getElementById('vertexs-block');
     let inputBlock = document.createElement('div');
     inputBlock.innerHTML = `
-            <div id="edge-${edgeId}" class="polyline-input-block">
-                <label>Aresta (x1,y1)</label>
+            <div id="vertex-${vertexId}" class="polyline-input-block">
+                <label>Vértice (x,y)</label>
                 <input type="number" value="0" min="0" max="42" class="polyline-x-input">
                 <input type="number" value="0" min="0" max="28" class="polyline-y-input">
-                <input type="button" value="Remover" id="remove-edge-btn-${edgeId}">
+                <input type="button" value="Remover" id="remove-vertex-btn-${vertexId}">
             </div>
             `;
-    edgesBlock.appendChild(inputBlock)
+    vertexsBlock.appendChild(inputBlock)
 }
 
-function removeEdgeInput(edgeId) {
-    document.getElementById(`edge-${edgeId}`).remove();
+function removeVertexInput(vertexId) {
+    document.getElementById(`vertex-${vertexId}`).remove();
 }
 
 // PRIVATES
-function _renderPoint(orderedPoint, color = 'black') {
-    let x = (MAX_X / 2 + orderedPoint.x) * PIXEL_SIZE * 1.05;
-    let y = (MAX_Y / 2 - orderedPoint.y) * PIXEL_SIZE * 1.05;
-    let brush = canvas.getContext('2d');
-
-    brush.fillStyle = color;
-    brush.fillRect(x, y, PIXEL_SIZE, PIXEL_SIZE);
-}
 
 function _renderBackground(orderedPoint, color = 'black') {
-    let x = orderedPoint.x * PIXEL_SIZE * 1.05;
-    let y = orderedPoint.y * PIXEL_SIZE * 1.05;
+    let x = orderedPoint.x * PIXEL_SIZE * THICKNESS;
+    let y = orderedPoint.y * PIXEL_SIZE * THICKNESS;
     let brush = canvas.getContext('2d');
 
     brush.fillStyle = color;
@@ -122,6 +151,6 @@ export default {
     clearCanvas,
     addCardTo,
     removePointCardList,
-    addEdgeInput,
-    removeEdgeInput,
+    addVertexInput,
+    removeVertexInput,
 }

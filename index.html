@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="X-UA-Compatible" content="IE=vertex">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="./css/main.css">
         <title>Computação Gráfica</title>
@@ -11,11 +11,12 @@
 
     <body>
         <div id="canvas-block">
-            <canvas></canvas>
+            <canvas id="screen"></canvas>
             <input type="button" id="clear-screen-btn" value="Limpar Canvas">
         </div>
         <div id="side-bar">
 
+            <!-- SHAPES CREATIONS -->
             <div id="shape-creation">
                 <h2>Criação de Formas</h2>
                 <!-- BRESENHAM -->
@@ -23,13 +24,13 @@
                     <h3>Reta</h3>
                     <div id="origin-input" class="input-block">
                         <label>Ponto origem (x1,y1)</label>
-                        <input type="number" value="0" min="0" max="42" id="x1-axis-input" class="axis-input">
-                        <input type="number" value="0" min="0" max="28" id="y1-axis-input" class="axis-input">
+                        <input type="number" value="0" max="42" id="x1-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="y1-axis-input" class="axis-input">
                     </div>
                     <div id="destiny-input" class="input-block">
                         <label>Ponto Destino (x2,y2)</label>
-                        <input type="number" value="0" min="0" max="84" id="x2-axis-input" class="axis-input">
-                        <input type="number" value="0" min="0" max="54" id="y2-axis-input" class="axis-input">
+                        <input type="number" value="0" max="84" id="x2-axis-input" class="axis-input">
+                        <input type="number" value="0" max="54" id="y2-axis-input" class="axis-input">
                     </div>
                     <input type="button" id="build-line-btn" class="btn build-btn" value="Desenhar Reta">
 
@@ -40,19 +41,25 @@
                         </div>
                     </section>
                 </section>
-               
+
                 <!-- POLYLINES -->
                 <section id="polyline-building-section">
                     <h3>Polilinhas</h3>
-                    <div id="edges-block">
+                    <div id="vertexs-block">
                         <div class="polyline-input-block">
-                            <label>Aresta (x1,y1)</label>
-                            <input type="number" value="0" min="0" max="42" class="polyline-x-input">
-                            <input type="number" value="0" min="0" max="28" class="polyline-y-input">
-                            
+                            <label>Vértice (x,y)</label>
+                            <input type="number" value="0" max="42" class="axis-input polyline-x-input">
+                            <input type="number" value="0" max="28" class="axis-input polyline-y-input">
+
+                        </div>
+                        <div class="polyline-input-block">
+                            <label>Vértice (x,y)</label>
+                            <input type="number" value="0" max="42" class="axis-input polyline-x-input">
+                            <input type="number" value="0" max="28" class="axis-input polyline-y-input">
+
                         </div>
                     </div>
-                    <input type="button" id="add-edge-btn" class="btn add-btn" value="Adicionar Aresta">
+                    <input type="button" id="add-vertex-btn" class="btn add-btn" value="Adicionar Aresta">
                     <input type="button" id="build-polyline-btn" class="btn build-btn" value="Desenhar Objeto">
 
                     <!-- POINTS-LIST -->
@@ -62,13 +69,18 @@
                         </div>
                     </section>
                 </section>
-                
+
                 <!-- CIRCLE -->
                 <section id="circle-building-section">
                     <h3>Círculo</h3>
                     <div id="radius-input-block" class="input-block">
                         <label>Raio (px)</label>
                         <input type="number" value="0" min="0" max="27" id="radius-input" class="axis-input">
+                    </div>
+                    <div id="radius-input-block" class="input-block">
+                        <label>Centro (x,y)</label>
+                        <input type="number" value="0" max="42" id="circle-x-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="circle-y-axis-input" class="axis-input">
                     </div>
                     <input type="button" id="build-circle-btn" class="btn build-btn" value="Desenhar Círculo">
 
@@ -78,41 +90,126 @@
                         <div class="card-list-block" id="list-points-circle"></div>
                     </section>
                 </section>
-                <!-- ELLIPSE -->
-                <section id="ellipse-building-section">
-                    <h3>Elipse</h3>
-                    <div id="ellipse-input-block" class="input-block">
-                        <label>Origem (a,b)</label>
-                        <input type="number" value="0" min="0" max="84" id="ellipse-a-axis-input" class="axis-input">
 
-                        <input type="number" value="0" min="0" max="54" id="ellipse-b-axis-input" class="axis-input">
+                <!-- CURVE -->
+                <section id="curve-building-section">
+                    <h3>Curva</h3>
+
+                    <div id="curve-points-input-block" class="input-block">
+                        <label>Pontos de Suavidade </label>
+                        <input type="number" value="3" min="2" id="curve-smoothness-input" class="axis-input">
                     </div>
-                    <input type="button" id="build-ellipse-btn" class="btn build-btn" value="Desenhar Círculo">
+                    <div id="curve-origin-input-block" class="input-block">
+                        <label>Origem (x,y)</label>
+                        <input type="number" value="0" max="42" id="curve-ox-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="curve-oy-axis-input" class="axis-input">
+                    </div>
+                    <div id="curve-c1-input-block" class="input-block">
+                        <label>Controle (x,y)</label>
+                        <input type="number" value="0" max="42" id="curve-c1x-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="curve-c1y-axis-input" class="axis-input">
+                    </div>
+                    <div id="curve-final-input-block" class="input-block">
+                        <label>Final (x,y)</label>
+                        <input type="number" value="0" max="42" id="curve-fx-axis-input" class="axis-input">
+                        <input type="number" value="0" max="28" id="curve-fy-axis-input" class="axis-input">
+                    </div>
+                    <input type="button" id="build-curve-btn" class="btn build-btn" value="Desenhar Curva">
 
                     <!-- POINTS-LIST -->
                     <section class="card-section">
                         <h4>Desenhos</h4>
-                        <div class="card-list-block" id="list-points-ellipse">
-                        </div>
+                        <div class="card-list-block" id="list-points-curve"></div>
                     </section>
                 </section>
+
+                 <!-- FILL -->
+                 <section id="fill-section">
+                    <h3>Preenchimento</h3>
+                    <p hidden id="fill-info">Clique em algum lugar do canvas para preencher</p>
+                    <label for="fill-select">Cor de Preenchimento</label>
+                    <select id="fill-select">
+                        <option value="black">Preto</option>
+                        <option value="blue">Azul</option>
+                        <option value="lightblue">Azul Claro</option>
+                        <option value="red">Vermelho</option>
+                        <option value="green">Verde</option>
+                    </select>
+                    <input type="button" id="btn-fill" class="btn-fill" value="Preencher">
+                    <!-- POINTS-LIST -->
+                    <section class="card-section">
+                        <h4>Desenhos</h4>
+                        <div class="card-list-block" id="list-points-fill"></div>
+                    </section>
+                </section>
+                
             </div>
 
             <!-- SHAPES CONTROLLER -->
             <div id="shape-control">
                 <h2>Controle das Formas</h2>
+
+                <!-- TRANSLATION -->
                 <section id="translation-section">
                     <h3>Translação</h3>
                     <label for="translation-select">Id da forma:</label>
-                    <select class="transformation-select" id="translation-select">
-                        <option value="alo"></option>
-                    </select>
-                    <div id="translation-controller">
-                        <input type="number" id="translation-x" value="0" placeholder="Eixo X">
-                        <input type="number" id="translation-y" value="0" placeholder="Eixo Y">
+                    <select class="shape-control-select" id="translation-select"></select>
+                    <div id="translation-controller" class="input-block">
+                        <label for="translation-x">Eixo X</label>
+                        <input type="number" id="translation-x" class="axis-input" value="0" placeholder="Eixo X">
+                        <label for="translation-y">Eixo Y</label>
+                        <input type="number" id="translation-y" class="axis-input" value="0" placeholder="Eixo Y">
                     </div>
                     <button id="btn-translation">Aplicar Translação</button>
                 </section>
+
+                <!-- SCALE -->
+                <section id="scale-section">
+                    <h3>Escala</h3>
+                    <label for="scale-select">Id da forma:</label>
+                    <select class="shape-control-select" id="scale-select">
+                    </select>
+                    <div id="scale-controller" class="input-block">
+                        <label for="scale-factor">Fator Eixo X</label>
+                        <input type="number" id="scale-factor-x" class="axis-input" min="0" value="1"
+                            placeholder="Fator">
+                        <label for="scale-factor">Fator Eixo y</label>
+                        <input type="number" id="scale-factor-y" class="axis-input" min="0" value="1"
+                            placeholder="Fator">
+                    </div>
+                    <button id="btn-scale">Aplicar Escala</button>
+                </section>
+
+                <!-- ROTATION -->
+                <section id="rotation-section">
+                    <h3>Rotação</h3>
+                    <label for="rotation-select">Id da forma:</label>
+                    <select class="shape-control-select" id="rotation-select">
+                    </select>
+                    <!-- PIVOT -->
+                    <label for="rotation-pivot-select">Tipo do Pivô</label>
+                    <select id="rotation-pivot-select">
+                        <option value="center">Centro</option>
+                        <option value="origin">Origem</option>
+                        <option value="random">Arbitrário</option>
+                    </select>
+
+                    <div id="arbitrarie-pivot-inputs" class="input-block" hidden>
+                        <label>Pivô:</label>
+                        <input type="number" id="rotation-x" class="axis-input" value="0" placeholder="Eixo X">
+                        <input type="number" id="rotation-y" class="axis-input" value="0" placeholder="Eixo Y">
+                    </div>
+
+                    <!-- ROTATION ANGLE -->
+                    <div id="rotation-controller" class="input-block">
+                        <label for="rotation-factor">Ângulo°:</label>
+                        <input type="number" id="rotation-angle" class="axis-input" min="0" value="45"
+                            placeholder="Fator">
+                    </div>
+                    <button id="btn-rotation">Aplicar Rotação</button>
+                </section>
+
+
             </div>
         </div>
     </body>

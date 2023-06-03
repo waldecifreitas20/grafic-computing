@@ -1,17 +1,17 @@
 import { createMatrix } from "../utils/utils.js";
 import OrderedPair from "../models/OrderedPair.js";
+import colors from "../utils/colors.js";
 
 export default class Bresenham {
 
-    constructor(matrixLength) {
+    constructor(matrixLength, color=colors.BORDER) {
         this.matrixLength = matrixLength;
         this.matrix = createMatrix(matrixLength, '- ');
         this._changeX = false;
         this._changeY = false;
         this._changeXY = false;
-        this.DRAWN_POINT = '1  ';
-        this.EMPTY_POINT = '-  ';
         this.pointsLocation = [];
+        this.color = color;
         this._reflectedPointsLocation = [];
     }
 
@@ -37,12 +37,6 @@ export default class Bresenham {
         }
 
         if (y1 > y2) {
-            if (y2 < 0) {
-                y2 *= -1;
-            }
-            if (y1 < 0) {
-                y1 *= -1;
-            }
             y1 = this.matrix.length - 1 - y1;
             y2 = this.matrix.length - 1 - y2;
             this._changeY = true;
@@ -57,10 +51,10 @@ export default class Bresenham {
     }
 
     buildLine(origin, destiny) {
-        let x1 = origin.x;
-        let x2 = destiny.x;
-        let y1 = origin.y;
-        let y2 = destiny.y;
+        let x1 = Math.round(origin.x);
+        let x2 = Math.round(destiny.x);
+        let y1 = Math.round(origin.y);
+        let y2 = Math.round(destiny.y);
         let axis = this._reflect(x1, x2, y1, y2);
 
         x1 = axis['x1'];
@@ -68,12 +62,14 @@ export default class Bresenham {
         y1 = axis['y1'];
         y2 = axis['y2'];
 
+
+        
         let M = (y2 - y1) / (x2 - x1);
         let e = M - 0.5;
         let x = x1;
         let y = y1;
 
-        this._reflectedPointsLocation.push(new OrderedPair(x, y,'0  '));
+        this._reflectedPointsLocation.push(new OrderedPair(x, y));
 
         while (x < x2) {
             if (e >= 0) {
@@ -83,7 +79,7 @@ export default class Bresenham {
 
             x++;
             e += M;
-
+       
             this._reflectedPointsLocation.push(new OrderedPair(x, y,));
         }
         this._disreflectMatrix();
@@ -116,7 +112,7 @@ export default class Bresenham {
             }
             
             
-            this.pointsLocation.push(new OrderedPair(x, y));
+            this.pointsLocation.push(new OrderedPair(x, y, this.color));
         }
 
         // Reset Variables
